@@ -78,7 +78,7 @@ const TypeThroughInput: FC<{ text: string }> = ({ text}) => {
             setCounter(0); //resets counter to 0
         } else if (letter === "Backspace") {
             deleteTyping(control);
-            if (count > 0) {
+            if (count > 0) { //don't decrement count lower than 0
                 decrement()
             }
             if (count < 26) {
