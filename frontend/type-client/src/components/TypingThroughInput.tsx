@@ -68,26 +68,47 @@ const TypeThroughInput: FC<{ text: string }> = ({ text}) => {
 
     //handle key presses
     const handleKeyDown = (letter: string, control: boolean) => {
-        let beforeErr = correctChar;
-        console.log("before", beforeErr);
         let spans = document.getElementsByTagName('span');
+        console.log(count);
         if (letter === "Escape") {
             resetTyping();
+            for (let i = 0; i < spans.length; i++)  {
+                spans[i].hidden = false;
+            }
+            setCounter(0); //resets counter to 0
         } else if (letter === "Backspace") {
             deleteTyping(control);
-            decrement()
-            //console.log(keypresses)
+            if (count > 0) {
+                decrement()
+            }
+            if (count < 26) {
+                for (let i = 0; i < 26; i++) {
+                    spans[i].hidden = false;
+                }
+            }
+
+            if (count < 56) {
+                for (let i = 26; i < 56; i++) {
+                    spans[i].hidden = false;
+                }
+            }
+
+            if (count < 114) {
+                for (let i = 56; i < 114; i++) {
+                    spans[i].hidden = false;
+                }
+            }
+
+            if (count < 165) {
+                for (let i = 114; i < 165; i++) {
+                    spans[i].hidden = false;
+                }
+            }
         } else if (letter.length === 1) {
             insertTyping(letter);
-            //console.log(keypresses)
             keypresses += 1;
-            //console.log(keypresses)
             let afterErr = correctChar;
-            console.log("after", afterErr)
-            console.log("count", count)
-
             if (count < afterErr) {
-                //console.log("yup")
                 increment()
                 keypresses = 0
             }
