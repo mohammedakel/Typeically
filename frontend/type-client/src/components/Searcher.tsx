@@ -4,7 +4,10 @@ import React from "react"
 const Searcher = ({onLoad: handleSearch}) => {
     //prevent pressing space from scrolling the page (for longer songs)
     document.documentElement.addEventListener('keydown', function (e) {
-        if ( ( e.keyCode || e.which ) == 32) {
+        // @ts-ignore
+        if ( ( e.keyCode || e.which ) == 32
+            && document.activeElement !== document.getElementById("search")
+            && document.activeElement !== document.getElementById("lbInput")) {
             e.preventDefault();
         }
     }, false);
