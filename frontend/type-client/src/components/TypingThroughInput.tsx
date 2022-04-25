@@ -197,13 +197,13 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
         lbButton.hidden=false;
         return(
             <>
-            <span className="text-green-500 mr-4">
+            <span id={"wpmLabel"} className="text-green-500 mr-4">
               WPM: {Math.round(((60 / duration) * correctChar) / 5)}
             </span>
-                <span className="text-blue-500 mr-4">
+                <span id={"accuracyLabel"} className="text-blue-500 mr-4">
               Accuracy: {((correctChar / text.length) * 100).toFixed(2)}%
             </span>
-                <span className="text-yellow-500 mr-4">Duration: {duration}s</span>
+                <span id={"durationLabel"} className="text-yellow-500 mr-4">Duration: {duration}s</span>
             </>
         )
     }
