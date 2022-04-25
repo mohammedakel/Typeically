@@ -7,7 +7,28 @@ interface PageProps {
     songName: string
     lyrics: string
 }
+let idxs = [] as number[];
 const TypingPage = ({id, artist, songName, lyrics}: PageProps) => {
+
+    lyrics = lyrics.replace(/ *\[[^\]]*]/g, ''); //remove all strings in [square brackets] (ie, [intro], [verse 1], etc.)
+    while(lyrics.charAt(0) === '\n') { //remove all leading \n line breaks at start of lyrics
+        lyrics = lyrics.substring(1);
+    }
+    lyrics = lyrics.replace(/\n\s*\n/g, '\n') //remove double line breaks
+    lyrics = lyrics.toLowerCase(); //set all lyrics to lowercase
+
+    for (let i = 0; i < lyrics.length; i++) { //store location/index of line breaks of string in idxs array
+        if (lyrics.charAt(i) === '\n') {
+            idxs.push(i);
+        }
+    }
+    lyrics = lyrics.replace(/\n/g, ' ') //replace the line breaks with a space
+    lyrics = lyrics.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    lyrics = lyrics.replace(/ /g, ' ')
+    lyrics = lyrics.replace(/’/g, '\'')
+    lyrics = lyrics.replace(/е/g, 'e') //replace cyrillic e with regular e
+    lyrics = lyrics.replace(/—/g, '-') //replace weird longer hyphen with standard hyphen
+    lyrics = lyrics.replace(/[^0-9a-z!\s@#$%^&*()_+={}|:;'"<>,.?/~`-]/gi, '?') //replace any unrecognized characters not on english keyboards with ?
 
     return (
         <div>
@@ -22,12 +43,15 @@ const TypingPage = ({id, artist, songName, lyrics}: PageProps) => {
                         text={
                             lyrics
                         }
+                        indices={
+                            idxs
+                        }
                     />
                 </div>
             </div >
             <div id={"lBoardInputs"} className={"lbInputs"}>
-                <input  id="search" className="search2" placeholder="username" autoComplete={"off"} ></input>
-                <button className={"button2"}>submit</button>
+                <input  id="lbInput" className="search2" placeholder="username" autoComplete={"off"} hidden></input>
+                <button id="lbButton"className={"button2"} hidden>submit</button>
             </div>
         </div>
     );
