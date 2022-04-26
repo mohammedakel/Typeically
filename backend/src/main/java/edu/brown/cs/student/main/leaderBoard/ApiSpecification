@@ -1,0 +1,184 @@
+1. GETTING TABLE NAME, COLUMN NAMES AND DATA
+
+Endpoint: /table?tableName=<table>
+Method: GET
+Expects: N/A
+Returns on Success:
+{
+	tableName: ___ : string,
+    columnNames: ___ : List<string>,
+	data: ___ : List<Map<String, String>>
+}
+Returns on Failure:
+{
+	error: ___ : string
+}
+
+Example:
+
+Endpoint:   /table?tableName=horoscopes
+
+Returns on success:
+{
+    tableName: "horoscopes",
+    columnNames: {"horoscope_id", “horoscope"}
+    data: {
+            {<"horoscope_id", “1”>, <"horoscope", "Aries"},
+            {<"horoscope_id", “2”>, <"horoscope", "Taurus"} ....
+            ... {<"horoscope_id", “12”>, <"horoscope", "Pisces"}
+            }
+}
+
+Returns on failure:
+{
+	error: “Database is not properly loaded.”
+}
+
+--------------------------------------------------------------------------
+2. GETTING NAMES OF ALL LOADED TABLES
+
+Endpoint: /database
+Method: GET
+Expects: N/A
+Returns on Success:
+{
+    tableNames: ___ : List<string>
+}
+Returns on Failure:
+{
+	error: ___ : string
+}
+
+Example:
+
+Endpoint: /database
+Returns on success:
+{
+    tableNames: {"horoscopes", “sqlite_sequence”, “ta_horoscope”, “tas”}
+}
+
+Returns on failure:
+{
+	error: “Database is not properly loaded.”
+}
+
+--------------------------------------------------------------------------
+
+3. UPDATING A VALUE OF A SPECIFIC TABLE
+
+Endpoint: /updateValue
+Method: POST
+Expects:
+{
+	tableName: ___ : string,
+	row: ___ : int,
+    updatedValue: ___ : Map<String, String>
+}
+
+Returns on Success:
+{
+	result: ___ : string
+}
+
+Returns on Failure:
+{
+	error: ___ : string
+}
+
+Example:
+Endpoint: /updateValue
+Expects:
+{
+	tableName: “horoscopes”,
+	row: 2,
+    updatedValue: {"horoscope_id": "4", "horoscope": "Virgo"}
+}
+Returns on success:
+{
+	result: “Successfully updated the value.”
+}
+Returns on failure:
+{
+	error: “No loaded database with the given table.”
+}
+
+--------------------------------------------------------------------------
+
+4. DELETING A VALUE OF A SPECIFIC TABLE
+
+Endpoint: /deleteValue
+Method: POST
+Expects:
+{
+	tableName: ___ : string,
+	row: ___ : int,
+}
+
+Returns on Success:
+{
+	result: ___ : string
+}
+
+Returns on Failure:
+{
+	error: ___ : string
+}
+
+Example:
+
+Endpoint: /deleteValue
+Expects:
+{
+	tableName: “horoscopes”,
+	row: 2
+}
+Returns on success:
+{
+	result: “Successfully deleted the value.”
+}
+
+Returns on failure:
+{
+	error: “No loaded database with the given table.”
+}
+
+--------------------------------------------------------------------------
+
+5. INSERTING A VALUE INTO A SPECIFIC TABLE
+
+Endpoint: /insertValue
+Method: POST
+Expects:
+{
+	tableName: ___ : string,
+    insertValue: ___ : Map<String, String>
+}
+
+Returns on Success:
+{
+	result: ___ : string
+}
+
+Returns on Failure:
+{
+	error: ___ : string
+}
+
+Example:
+
+Endpoint: /insertValue
+Expects:
+{
+	tableName: “horoscopes”,
+    insertValue: {"horoscope_id": "13", "horoscope": "Capricorn"}
+
+}
+Returns on success:
+{
+	result: “Successfully inserted the value.”
+}
+Returns on failure:
+{
+	error: “No loaded database with the given table.”
+}
+

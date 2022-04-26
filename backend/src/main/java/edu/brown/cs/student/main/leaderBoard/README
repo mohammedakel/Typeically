@@ -1,0 +1,38 @@
+README DatabaseIntegration - Johnny Boustany
+
+Runs these commands for the API demo
+(while making sure to not change anything for good):
+    cd backend
+    ./run --gui
+
+    load_database data/horoscopes.sqlite3
+    verify_api database
+    verify_api table horoscopes
+
+    verify_api delete horoscopes horoscope Pisces
+    verify_api table horoscopes
+
+    verify_api insert horoscopes 12 Pisces
+    verify_api table horoscopes
+
+    verify_api update horoscopes horoscope Cancer horoscope_id 6
+    verify_api table horoscopes
+
+    verify_api update horoscopes horoscope Virgo horoscope_id 6
+    verify_api table horoscopes
+
+The demo can be run using any of the 3 database files, and any of the tables.
+
+To run the system tests:
+    cd backend
+    ./cs32-test tests/sprint-3/student/dbIntegration/*.test
+
+To run the Junit tests:
+    cd backend
+    mvn test
+
+20 hours
+
+
+
+
