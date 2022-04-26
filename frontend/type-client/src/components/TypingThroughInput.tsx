@@ -74,6 +74,8 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
         if (letter === "Escape") {
             let lbInput = document.getElementById("lbInput") as HTMLInputElement;
             let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
+            let lbInstructions = document.getElementById("lbInstructions") as HTMLDivElement;
+            lbInstructions.hidden=true;
             lbInput.hidden=true; //hide username input box
             lbButton.hidden=true; //hide username leaderboard submit button
             resetTyping();
@@ -193,8 +195,10 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
         }
         let lbInput = document.getElementById("lbInput") as HTMLInputElement;
         let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
+        let lbInstructions = document.getElementById("lbInstructions") as HTMLDivElement;
         lbInput.hidden=false;
         lbButton.hidden=false;
+        lbInstructions.hidden=false;
         return(
             <>
             <span id={"wpmLabel"} className="text-green-500 mr-4">
@@ -204,6 +208,7 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
               Accuracy: {((correctChar / text.length) * 100).toFixed(2)}%
             </span>
                 <span id={"durationLabel"} className="text-yellow-500 mr-4">Duration: {duration}s</span>
+
             </>
         )
     }

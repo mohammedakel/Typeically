@@ -49,9 +49,12 @@ const TypingPage = ({id, artist, songName, lyrics}: PageProps) => {
                     />
                 </div>
             </div >
+            <div className="container2">
+                <div id={"lbInstructions"}className="typed-out" hidden>Enter a user name and submit to leaderboard</div>
+            </div>
             <div id={"lBoardInputs"} className={"lbInputs"}>
-                <input  id="lbInput" className="search2" placeholder="username" autoComplete={"off"} hidden></input>
-                <button id="lbButton"className={"button2"} hidden>submit</button>
+                <span><input  id="lbInput" className="search2" placeholder="username" autoComplete={"off"} hidden></input></span>
+                <span><button id="lbButton"className={"button2"} hidden>submit</button></span>
             </div>
         </div>
     );
