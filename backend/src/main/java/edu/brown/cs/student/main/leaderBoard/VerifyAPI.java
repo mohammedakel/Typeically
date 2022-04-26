@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.DatabaseIntegration;
+package edu.brown.cs.student.main.leaderBoard;
 
 // imports
 import edu.brown.cs.student.main.REPL.REPLable;

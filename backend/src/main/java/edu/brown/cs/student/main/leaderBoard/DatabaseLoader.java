@@ -1,7 +1,7 @@
-package edu.brown.cs.student.main.TableLoadViz;
+package edu.brown.cs.student.main.leaderBoard;
 
 // imports
-import edu.brown.cs.student.main.DatabaseIntegration.StoredDatabase;
+import edu.brown.cs.student.main.leaderBoard.StoredDatabase;
 import edu.brown.cs.student.main.REPL.REPLable;
 import java.io.File;
 import java.sql.Connection;

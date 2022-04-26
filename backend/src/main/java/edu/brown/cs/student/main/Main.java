@@ -4,16 +4,12 @@ package edu.brown.cs.student.main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
-import edu.brown.cs.student.main.DatabaseIntegration.DatabaseHandler;
-import edu.brown.cs.student.main.DatabaseIntegration.DeleteHandler;
-import edu.brown.cs.student.main.DatabaseIntegration.InsertHandler;
-import edu.brown.cs.student.main.DatabaseIntegration.StoredDatabase;
-import edu.brown.cs.student.main.DatabaseIntegration.VerifyAPI;
-import edu.brown.cs.student.main.DatabaseIntegration.TableHandler;
-import edu.brown.cs.student.main.DatabaseIntegration.UpdateHandler;
+import edu.brown.cs.student.main.leaderBoard.DatabaseLoader;
+import edu.brown.cs.student.main.leaderBoard.InsertHandler;
+import edu.brown.cs.student.main.leaderBoard.StoredDatabase;
+import edu.brown.cs.student.main.leaderBoard.VerifyAPI;
+import edu.brown.cs.student.main.leaderBoard.TableHandler;
 import edu.brown.cs.student.main.REPL.GenericREPL;
-import edu.brown.cs.student.main.TableLoadViz.DatabaseLoader;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.ExceptionHandler;
@@ -128,10 +124,7 @@ public final class Main {
     // create a call to Spark.get to make a GET request to a URL
     Spark.exception(Exception.class, new ExceptionPrinter());
     Spark.get("/table", new TableHandler(databaseLoader));
-    Spark.get("/database", new DatabaseHandler(databaseLoader));
     Spark.post("/insert", new InsertHandler(databaseLoader));
-    Spark.post("/update", new UpdateHandler(databaseLoader));
-    Spark.post("/delete", new DeleteHandler(databaseLoader));
     Spark.init();
   }
 
