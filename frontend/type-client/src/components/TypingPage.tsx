@@ -13,90 +13,6 @@ var Filter = require('bad-words'),
 userFilter.removeWords('xxx', 'hell', 'yed');
 
 
-
-function delay(time: number) {
-    return new Promise(resolve => setTimeout(resolve, time));
-}
-
-async function hideImage() {
-    let img = document.getElementById("image") as HTMLDivElement;
-    let spans = document.getElementsByTagName("span");
-    img.style.animation = 'fadeOut .65s, searchmate .9s steps(75, end) forwards';
-    for (let i = 0; i < spans.length; i++) {
-        spans[i].style.opacity = "1";
-    }
-    await delay(500);
-    img.hidden = true;
-}
-
-async function showImage() {
-    let img = document.getElementById("image") as HTMLDivElement;
-    let spans = document.getElementsByTagName("span");
-    let albumArt = document.getElementById("albumArt") as HTMLImageElement;
-    img.hidden = false;
-    img.style.animation = 'fadeIn .65s';
-
-    for (let i = 0; i < spans.length; i++) {
-        spans[i].style.opacity = "0";
-    }
-}
-
-
-function submitUser() {
-    let lbInput = document.getElementById("lbInput") as HTMLInputElement;
-    let invalidLabel = document.getElementById("invalidUserLabel") as HTMLElement;
-    if (contiguousValid()) {
-        //ADD RESULTS TO LEADERBOARD
-        lbInput.className = lbInput.className.replace(" invalid", "");
-        lbInput.className = lbInput.className.replace(" valid", "");
-        lbInput.className = lbInput.className + " valid";
-        invalidLabel.hidden = true;
-    } else {
-        lbInput.className = lbInput.className.replace(" invalid", "");
-        lbInput.className = lbInput.className.replace(" valid", "");
-        lbInput.className = lbInput.className + " invalid";
-        invalidLabel.hidden = false;
-    }
-}
-
-function contiguousValid() {
-    userSubstrings = [];
-    let lbInput = document.getElementById("lbInput") as HTMLInputElement;
-    contiguousSubstrings(lbInput.value)
-    for (let j = 0; j < userSubstrings.length; j++) {
-        if (userFilter.isProfane(userSubstrings[j])) {
-            wasProfane = true;
-            break;
-        }
-        if (userFilter.isProfane(userSubstrings[j].replace("x", ""))) {
-            wasProfane = true;
-            break;
-        }
-        if (userFilter.isProfane(userSubstrings[j].replace("-", ""))) {
-            wasProfane = true;
-            break;
-        }
-        if (userFilter.isProfane(userSubstrings[j].replace("_", ""))) {
-            wasProfane = true;
-            break;
-        }
-    }
-    if (wasProfane) {
-        wasProfane = false;
-        return false;
-    } else {
-        return true;
-    }
-}
-
-function contiguousSubstrings(str: string) {
-    for (let i = 0; i < str.length; i++) {
-        for (let j = i; j < str.length; j++) {
-            userSubstrings.push(str.slice(i, j + 1));
-        }
-    }
-}
-
 const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
     //replace last ' by ' in title with hyphen ("-")
     var n = title.lastIndexOf(" by ");
@@ -158,5 +74,88 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             </div>
         </div>
     );
+
+    function submitUser() {
+        let lbInput = document.getElementById("lbInput") as HTMLInputElement;
+        let invalidLabel = document.getElementById("invalidUserLabel") as HTMLElement;
+        if (contiguousValid()) {
+            //ADD RESULTS TO LEADERBOARD
+            lbInput.className = lbInput.className.replace(" invalid", "");
+            lbInput.className = lbInput.className.replace(" valid", "");
+            lbInput.className = lbInput.className + " valid";
+            invalidLabel.hidden = true;
+        } else {
+            lbInput.className = lbInput.className.replace(" invalid", "");
+            lbInput.className = lbInput.className.replace(" valid", "");
+            lbInput.className = lbInput.className + " invalid";
+            invalidLabel.hidden = false;
+        }
+    }
+
+    function delay(time: number) {
+        return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+    async function hideImage() {
+        let img = document.getElementById("image") as HTMLDivElement;
+        let spans = document.getElementsByTagName("span");
+        img.style.animation = 'fadeOut .65s, searchmate .9s steps(75, end) forwards';
+        for (let i = 0; i < spans.length; i++) {
+            spans[i].style.opacity = "1";
+        }
+        await delay(500);
+        img.hidden = true;
+    }
+
+    async function showImage() {
+        let img = document.getElementById("image") as HTMLDivElement;
+        let spans = document.getElementsByTagName("span");
+        let albumArt = document.getElementById("albumArt") as HTMLImageElement;
+        img.hidden = false;
+        img.style.animation = 'fadeIn .65s';
+
+        for (let i = 0; i < spans.length; i++) {
+            spans[i].style.opacity = "0";
+        }
+    }
+
+    function contiguousValid() {
+        userSubstrings = [];
+        let lbInput = document.getElementById("lbInput") as HTMLInputElement;
+        contiguousSubstrings(lbInput.value)
+        for (let j = 0; j < userSubstrings.length; j++) {
+            if (userFilter.isProfane(userSubstrings[j])) {
+                wasProfane = true;
+                break;
+            }
+            if (userFilter.isProfane(userSubstrings[j].replace("x", ""))) {
+                wasProfane = true;
+                break;
+            }
+            if (userFilter.isProfane(userSubstrings[j].replace("-", ""))) {
+                wasProfane = true;
+                break;
+            }
+            if (userFilter.isProfane(userSubstrings[j].replace("_", ""))) {
+                wasProfane = true;
+                break;
+            }
+        }
+        if (wasProfane) {
+            wasProfane = false;
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function contiguousSubstrings(str: string) {
+        for (let i = 0; i < str.length; i++) {
+            for (let j = i; j < str.length; j++) {
+                userSubstrings.push(str.slice(i, j + 1));
+            }
+        }
+    }
+
 }
 export default TypingPage
