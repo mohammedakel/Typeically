@@ -25,7 +25,7 @@ async function alertCaps(letter : string) {
     }
 }
 
-const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indices}) => {
+const TypeThroughInput: FC<{ text: string, indices: number[]}> = ({ text, indices}) => {
     document.addEventListener('keydown', function(event){
         if(event.key === "Escape"){
             let lbInput = document.getElementById("lbInput") as HTMLInputElement;
@@ -115,14 +115,12 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
             if (count > 0) { //don't decrement count lower than 0
                 decrement()
             }
-
             for (let j = 0; j < indices.length; j++) {
                 if (count < indices[j] + 1) {
                     detIdx = j
                     break;
                 }
             }
-
             if (count < indices[0] + 1) {
                 for (let i = 0; i < indices[0]+1; i++) {
                     spans[i].hidden = false;
@@ -234,6 +232,11 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
         lbInput.hidden=false;
         lbButton.hidden=false;
         lbInstructions.hidden=false;
+
+        //set stats as attributes of lbInput so that we can get the info in TypingPage for the leaderboard:
+        lbInput.setAttribute("wpm", Math.round(((60 / duration) * correctChar) / 5).toString())
+        lbInput.setAttribute("acc", (((correctChar - (errorChar)/4) / text.length) * 100).toFixed(2) + "%")
+        lbInput.setAttribute("duration", duration.toString())
         return(
             <>
             <span id={"wpmLabel"} className="text-green-500 mr-4">

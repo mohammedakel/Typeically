@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TypingThroughInput from "./TypingThroughInput";
 
 interface PageProps {
@@ -38,6 +38,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
     lyrics = lyrics.replace(/—/g, '-') //replace weird longer hyphen with standard hyphen
     lyrics = lyrics.replace(/[^0-9a-z!\s@#$%^&*()_+={}|:;'"<>,.?/~`-]/gi, '?') //replace any unrecognized characters not on english keyboards with ?
 
+    // @ts-ignore
     return (
         <div>
             <h1><a className={"t1"} href='.' onClick={(event: React.MouseEvent<HTMLElement>) => {
@@ -75,15 +76,33 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
         </div>
     );
 
+    /**
+     * Handles leaderboard submission logic, and is called when the user clicks the lbButton element!
+     */
     function submitUser() {
         let lbInput = document.getElementById("lbInput") as HTMLInputElement;
+        let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
         let invalidLabel = document.getElementById("invalidUserLabel") as HTMLElement;
         if (contiguousValid()) {
-            //ADD RESULTS TO LEADERBOARD
+            let tableId = id; //'id' is the song id associated with the song, obtained from the Genius API
+            let wpm = lbInput.getAttribute("wpm");
+            let accuracy = lbInput.getAttribute("acc");
+            let duration = lbInput.getAttribute("duration");
+            console.log("wpm: " + wpm + ", accuracy: " + accuracy + ", duration: " + duration);
+
+            //ADD RESULTS TO LEADERBOARD HERE!!
+
+
+
+            //here, we update the color of the border to indicate the user was accepted and leaderboard was updated:
             lbInput.className = lbInput.className.replace(" invalid", "");
             lbInput.className = lbInput.className.replace(" valid", "");
             lbInput.className = lbInput.className + " valid";
             invalidLabel.hidden = true;
+
+            //hide username input and submit button so that users cannot click submit again after successful submission:
+            lbInput.hidden = true;
+            lbButton.hidden = true;
         } else {
             lbInput.className = lbInput.className.replace(" invalid", "");
             lbInput.className = lbInput.className.replace(" valid", "");
