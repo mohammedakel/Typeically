@@ -8,6 +8,104 @@ interface PageProps {
     lyrics: string
 }
 let idxs = [] as number[];
+var Filter = require('bad-words'),
+    userFilter = new Filter(), userSubstrings = [''], wasProfane = false;
+userFilter.removeWords('xxx', 'hell', 'yed');
+
+
+
+function delay(time: number) {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
+
+async function hideImage() {
+    let img = document.getElementById("image") as HTMLDivElement;
+    let spans = document.getElementsByTagName("span");
+    img.style.animation = 'fadeOut .65s, searchmate .9s steps(75, end) forwards';
+    for (let i = 0; i < spans.length; i++) {
+        spans[i].style.opacity = "1";
+    }
+    await delay(500);
+    img.hidden = true;
+}
+
+async function showImage() {
+    let img = document.getElementById("image") as HTMLDivElement;
+    let spans = document.getElementsByTagName("span");
+    let albumArt = document.getElementById("albumArt") as HTMLImageElement;
+    img.hidden = false;
+    img.style.animation = 'fadeIn .65s, searchmate .9s steps(75, end) forwards';
+
+    for (let i = 0; i < spans.length; i++) {
+        spans[i].style.opacity = "0";
+    }
+}
+
+
+function submitUser() {
+    let lbInput = document.getElementById("lbInput") as HTMLInputElement;
+    let invalidLabel = document.getElementById("invalidUserLabel") as HTMLElement;
+    if (contiguousValid()) {
+        //ADD RESULTS TO LEADERBOARD
+        lbInput.className = lbInput.className.replace(" invalid", "");
+        lbInput.className = lbInput.className.replace(" valid", "");
+        lbInput.className = lbInput.className + " valid";
+        invalidLabel.hidden = true;
+    } else {
+        lbInput.className = lbInput.className.replace(" invalid", "");
+        lbInput.className = lbInput.className.replace(" valid", "");
+        lbInput.className = lbInput.className + " invalid";
+        invalidLabel.hidden = false;
+    }
+}
+
+function contiguousValid() {
+    userSubstrings = [];
+    let lbInput = document.getElementById("lbInput") as HTMLInputElement;
+    contiguousSubstrings(lbInput.value)
+    for (let j = 0; j < userSubstrings.length; j++) {
+        if (userFilter.isProfane(userSubstrings[j])) {
+            wasProfane = true;
+            break;
+        }
+        if (userFilter.isProfane(userSubstrings[j].replace("x", ""))) {
+            wasProfane = true;
+            break;
+        }
+        if (userFilter.isProfane(userSubstrings[j].replace("-", ""))) {
+            wasProfane = true;
+            break;
+        }
+        if (userFilter.isProfane(userSubstrings[j].replace("_", ""))) {
+            wasProfane = true;
+            break;
+        }
+    }
+    if (wasProfane) {
+        wasProfane = false;
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function subsetsOfString(str: string, curr = '', index = 0) {
+    if (index == str.length) {
+        userSubstrings.push(curr);
+        return userSubstrings;
+    }
+    subsetsOfString(str, curr, index + 1);
+    subsetsOfString(str, curr + str[index], index + 1);
+}
+
+function contiguousSubstrings(str: string) {
+    for (let i = 0; i < str.length; i++) {
+        for (let j = i; j < str.length; j++) {
+            userSubstrings.push(str.slice(i, j + 1));
+        }
+    }
+}
+
 const TypingPage = ({id, artist, songName, lyrics}: PageProps) => {
 
     lyrics = lyrics.replace(/ *\[[^\]]*]/g, ''); //remove all strings in [square brackets] (ie, [intro], [verse 1], etc.)
@@ -38,23 +136,30 @@ const TypingPage = ({id, artist, songName, lyrics}: PageProps) => {
             <div className="container mx-auto flex flex-col p-4">
                 <h5>Esc to reset</h5>
                 <div className="border-2 p-4 rounded-lg">
-                    <h1 className="mb-2">{artist} - {songName}</h1>
-                    <TypingThroughInput
-                        text={
-                            lyrics
-                        }
-                        indices={
-                            idxs
-                        }
-                    />
+                    <h1 onMouseOver={showImage} onMouseLeave={hideImage} className="mb-2">{artist} - {songName}</h1>
+
+                    <div id={"lyrics"} >
+                        <TypingThroughInput
+                            text={
+                                lyrics
+                            }
+                            indices={
+                                idxs
+                            }
+                        />
+                    </div>
+                    <div id={"image"} hidden > <img id={"albumArt"}src={"https://t2.genius.com/unsafe/576x576/https%3A%2F%2Fimages.genius.com%2Fe42bf41b71339f636619de3f6a8eb04d.1000x1000x1.jpg"} alt={""} ></img></div>
                 </div>
             </div >
             <div className="container2">
                 <div id={"lbInstructions"}className="typed-out" hidden>Enter a user name and submit to leaderboard</div>
             </div>
             <div id={"lBoardInputs"} className={"lbInputs"}>
-                <span><input  id="lbInput" className="search2" placeholder="username" autoComplete={"off"} hidden></input></span>
-                <span><button id="lbButton"className={"button2"} hidden>submit</button></span>
+                <span><input id="lbInput" className="search2" placeholder="username" autoComplete={"off"} maxLength={12} hidden></input></span>
+                <span><button id="lbButton"className={"button2"} onClick={submitUser} hidden>submit</button></span>
+            </div>
+            <div className="labelContainer">
+                <div id={"invalidUserLabel"}className="typed-out2" hidden>profanity detected in username ;( please try something else</div>
             </div>
         </div>
     );

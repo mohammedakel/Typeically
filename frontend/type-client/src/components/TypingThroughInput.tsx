@@ -205,7 +205,7 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
               WPM: {Math.round(((60 / duration) * correctChar) / 5)}
             </span>
                 <span id={"accuracyLabel"} className="text-blue-500 mr-4">
-              Accuracy: {((correctChar / text.length) * 100).toFixed(2)}%
+              Accuracy: {(((correctChar - (errorChar)/4) / text.length) * 100).toFixed(2)}%
             </span>
                 <span id={"durationLabel"} className="text-yellow-500 mr-4">Duration: {duration}s</span>
 
