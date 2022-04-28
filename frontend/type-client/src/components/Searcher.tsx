@@ -12,7 +12,7 @@ const Searcher = ({onLoad: handleSearch}) => {
         }
     }, false);
     return (
-        <div id="load-page">
+        <div id="load-page" >
             <h1 className="t1">Typeically</h1>
             <div className={"barButton"}>
                 <input id="search" className="search" placeholder="Search..." autoComplete={"off"} ></input>
@@ -24,4 +24,5 @@ const Searcher = ({onLoad: handleSearch}) => {
         </div>
     )
 }
+
 export default Searcher

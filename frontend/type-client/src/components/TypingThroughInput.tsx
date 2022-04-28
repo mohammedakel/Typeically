@@ -5,6 +5,17 @@ interface IState {
     count: number;
 }
 
+function alertCaps(letter : string) {
+    let capsAlert = document.getElementById("caps-alert") as HTMLDivElement;
+    if (capsAlert.hidden === true && letter === "CapsLock") {
+        capsAlert.hidden = false;
+    } else if (capsAlert.hidden === false && letter === "CapsLock") {
+        capsAlert.hidden = true;
+    } else{
+        capsAlert.hidden = false;
+    }
+}
+
 const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indices}) => {
     const [duration, setDuration] = useState(0);
     const [isFocused, setIsFocused] = useState(false);
@@ -73,7 +84,7 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
         let spans = document.getElementsByTagName('span');
         console.log(count);
         if (letter === "CapsLock") {
-            alert("Warning: Caps lock was pressed")
+            alertCaps(letter);
         } else if (letter === "Escape") {
             let lbInput = document.getElementById("lbInput") as HTMLInputElement;
             let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
@@ -110,9 +121,11 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
             }
         } else if (letter.length === 1) {
             if (!(letterPrev === "Shift" || letter.toLowerCase() === letter)) {
-                alert("check your caps mama")
+                alertCaps(letter);
             }
             else {
+                let capsAlert = document.getElementById("caps-alert") as HTMLDivElement;
+                capsAlert.hidden = true;
                 insertTyping(letter);
                 keypresses += 1;
                 let afterErr = correctChar;

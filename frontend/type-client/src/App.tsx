@@ -15,6 +15,7 @@ let lyrics = "[Verse 1: Moliy]\n" +
     "I wanna fuck ya, but I don’t know\n" +
     "Might wanna rock you like Calypso\n" +
     "If you do me sweet like Haribo"
+
 const App = () => {
   const [song, setSong] = useState<boolean>(false)
 
@@ -27,7 +28,10 @@ const App = () => {
       <div className="App">
         {song ?
             <TypingPage id={id} title={title} lyrics={lyrics} albumArt={albumArt}/> :
-            <Searcher onLoad={handleSearch} />}
+            <Searcher onLoad={handleSearch} />
+        }
+          <div id={"caps-alert"} hidden > Warning: Caps Lock Detected </div>
+
       </div>
   );
 };
