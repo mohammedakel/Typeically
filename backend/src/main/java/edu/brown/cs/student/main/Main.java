@@ -4,6 +4,8 @@ package edu.brown.cs.student.main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
+import edu.brown.cs.student.main.leaderBoard.DatabaseHandler;
 import edu.brown.cs.student.main.leaderBoard.DatabaseLoader;
 import edu.brown.cs.student.main.leaderBoard.InsertHandler;
 import edu.brown.cs.student.main.leaderBoard.StoredDatabase;
@@ -123,6 +125,7 @@ public final class Main {
 
     // create a call to Spark.get to make a GET request to a URL
     Spark.exception(Exception.class, new ExceptionPrinter());
+    Spark.get("/database", new DatabaseHandler(databaseLoader));
     Spark.get("/table", new TableHandler(databaseLoader));
     Spark.post("/insert", new InsertHandler(databaseLoader));
     Spark.init();

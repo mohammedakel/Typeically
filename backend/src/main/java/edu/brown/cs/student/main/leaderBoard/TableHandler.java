@@ -45,22 +45,23 @@ public class TableHandler implements Route {
       List<Map<String, String>> tableData = databaseLoader.getStoredDatabase().getTableData(tableName);
       List<List<String>> rowData = new ArrayList<>();
 
-      for (Map<String, String> rowMap : tableData) {
-        List<String> rowList = new ArrayList<>();
-
-        for (String tableColumnName : tableColumnNames) {
-          rowList.add(rowMap.get(tableColumnName));
-        }
-        rowData.add(rowList);
-      }
-
-      if (tableColumnNames == null || tableData == null){
+      if (tableColumnNames == null){
         Map error1 = ImmutableMap.of("error", "Table does not exist.");
         return GSON.toJson(error1);
 
       } else {
+
+        for (Map<String, String> rowMap : tableData) {
+          List<String> rowList = new ArrayList<>();
+
+          for (String tableColumnName : tableColumnNames) {
+            rowList.add(rowMap.get(tableColumnName));
+          }
+          rowData.add(rowList);
+        }
+
         // create an immutable map
-        Map tableMap = ImmutableMap.of("tableName", tableName, "columnNames", tableColumnNames, "data", tableData, "rowData", rowData);
+        Map tableMap = ImmutableMap.of("tableName", tableName, "columnNames", tableColumnNames, "rowData", rowData);
         return GSON.toJson(tableMap);
       }
 

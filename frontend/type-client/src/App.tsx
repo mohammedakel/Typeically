@@ -1,12 +1,22 @@
+
+
 import React, {useState} from "react";
 import TypingPage from "./components/TypingPage";
 import "./styles.css";
 import Searcher from "./components/Searcher";
 
-let artist = "Lauryn Hill"
-let name = "Ex-Factor"
+let albumArt = "https://t2.genius.com/unsafe/576x576/https%3A%2F%2Fimages.genius.com%2Fe42bf41b71339f636619de3f6a8eb04d.1000x1000x1.jpg"
+let title = "FEEL A WAY by Amaarae"
 let id = ""
-let lyrics = "it could all be so simple but you'd rather make it hard loving you is like a battle and we both end up with scars tell me, who i have to be? to get some reciprocity see, no one loves you more than me and no one ever will is this just a silly game that forces you to act this way, forces you to scream my name, then pretend that you can't stay?"
+let lyrics = "[Verse 1: Moliy]\n" +
+    "I really wanna know know\n" +
+    "Are you feeling the vibes?\n" +
+    "Hennessy on the rocks, Sweet Fernando\n" +
+    "Maybe you could be my commando\n" +
+    "I wanna bring you to my condo\n" +
+    "I wanna fuck ya, but I don’t know\n" +
+    "Might wanna rock you like Calypso\n" +
+    "If you do me sweet like Haribo"
 const App = () => {
   const [song, setSong] = useState<boolean>(false)
 
@@ -18,7 +28,7 @@ const App = () => {
   return (
       <div className="App">
         {song ?
-            <TypingPage id={id} artist={artist} songName={name} lyrics={lyrics} /> :
+            <TypingPage id={id} title={title} lyrics={lyrics} albumArt={albumArt}/> :
             <Searcher onLoad={handleSearch} />}
       </div>
   );

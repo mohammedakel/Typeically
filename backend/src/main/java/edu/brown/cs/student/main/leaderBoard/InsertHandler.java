@@ -10,6 +10,7 @@ import spark.Response;
 import spark.Route;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,42 +55,41 @@ public class InsertHandler implements Route {
       try {
         tableName = requestJSON.getString("tableName");
         System.out.println(tableName);
-
       } catch (JSONException e) {
         System.out.println("ERROR: Invalid parameters passed in.");
       }
 
       List<String> tableNames = databaseLoader.getStoredDatabase().getTableNames();
 
-      if (!tableNames.contains(tableName)) {
-        Map error1 = ImmutableMap.of("error", "Table does not exist.");
-        return GSON.toJson(error1);
-
-      } else {
-        Map result;
+      if (!tableNames.contains(tableName)){
         try {
-
-          List<String> columnNames =  databaseLoader.getStoredDatabase().getColumnNames(tableName);
-          Map<String, String> rowToInsert = new HashMap<>();
-
-          for (int col = 0; col < columnNames.size(); col++) {
-            String colName = columnNames.get(col);
-            String value = requestJSON.getString(colName);
-            rowToInsert.put(colName,value);
-          }
-
-          this.insertRow(tableName, rowToInsert);
-          result = ImmutableMap.of("result", "Successfully inserted the row into the table, " + tableName + ".");
-
-        } catch (JSONException | SQLException e) {
-          result = ImmutableMap.of("result", "Failed to insert the row into the table, " + tableName + ".");
+          this.createTable(tableName);
+        } catch (SQLException e) {
+          System.out.println("ERROR: Table not created.");
         }
-        return GSON.toJson(result);
       }
 
+      Map result;
+      try {
+        List<String> columnNames =  databaseLoader.getStoredDatabase().getColumnNames(tableName);
+        Map<String, String> rowToInsert = new HashMap<>();
+
+        for (int col = 0; col < columnNames.size(); col++) {
+          String colName = columnNames.get(col);
+          String value = requestJSON.getString(colName);
+          rowToInsert.put(colName,value);
+        }
+        this.insertRow(tableName, rowToInsert);
+        result = this.getTableDataMap(tableName);
+
+      } catch (JSONException | SQLException e) {
+        result = ImmutableMap.of("result", "Failed to insert the row into the table, " + tableName + ".");
+      }
+      return GSON.toJson(result);
+
     } else {
-      Map error2 = ImmutableMap.of("error", "Database is not properly loaded.");
-      return GSON.toJson(error2);
+      Map error = ImmutableMap.of("error", "Database is not properly loaded.");
+      return GSON.toJson(error);
     }
   }
 
@@ -124,5 +124,36 @@ public class InsertHandler implements Route {
 
     // update data in StoredData
     databaseLoader.setTableData();
+  }
+
+  public Map getTableDataMap (String tableName){
+    List<String> tableColumnNames = databaseLoader.getStoredDatabase().getColumnNames(tableName);
+    List<Map<String, String>> tableData = databaseLoader.getStoredDatabase().getTableData(tableName);
+    List<List<String>> rowData = new ArrayList<>();
+
+    for (Map<String, String> rowMap : tableData) {
+      List<String> rowList = new ArrayList<>();
+
+      for (String tableColumnName : tableColumnNames) {
+        rowList.add(rowMap.get(tableColumnName));
+      }
+      rowData.add(rowList);
+    }
+    return ImmutableMap.of("tableName", tableName, "columnNames", tableColumnNames, "rowData", rowData);
+  }
+
+  public void createTable (String tableName) throws SQLException {
+    String sql = "CREATE TABLE IF NOT EXISTS " + tableName + "("
+        + "Username TEXT,"
+        + "Date DATE,"
+        + "Accuracy NUMERIC,"
+        + "Time NUMERIC);";
+
+    PreparedStatement tableStatement = databaseLoader.getConn().prepareStatement(sql);
+    tableStatement.executeUpdate();
+    tableStatement.close();
+
+    databaseLoader.setTableNames();
+    databaseLoader.setTableColumnNames();
   }
 }

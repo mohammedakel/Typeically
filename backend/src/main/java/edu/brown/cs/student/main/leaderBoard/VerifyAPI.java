@@ -38,8 +38,8 @@ public class VerifyAPI implements REPLable {
       this.databaseEndpoint();
     } else if(args.size() == 3 && args.get(1).equals("table")){
       this.tableEndpoint(args.get(2));
-    } else if(args.size() == 5 && args.get(1).equals("insert")){
-      this.insertEndpoint(args.get(2), args.get(3), args.get(4));
+    } else if(args.size() == 7 && args.get(1).equals("insert")){
+      this.insertEndpoint(args.get(2), args.get(3), args.get(4), args.get(5), args.get(6));
     } else if(args.size() == 7 && args.get(1).equals("update")){
       this.updateEndpoint(args.get(2), args.get(3), args.get(4), args.get(5), args.get(6));
     } else if(args.size() == 5 && args.get(1).equals("delete")){
@@ -172,9 +172,10 @@ public class VerifyAPI implements REPLable {
    * @param value1 string
    * @param value2 string
    */
-  public void insertEndpoint(String tableName, String value1, String value2) {
+  public void insertEndpoint(String tableName, String value1, String value2, String value3, String value4) {
     String insertValue =  "{\"tableName\":\"" + tableName + "\","
-        + " \"horoscope_id\":\"" + value1 + "\"," + " \"horoscope\":\"" + value2 + "\"}";
+        + " \"Username\":\"" + value1 + "\"," + " \"Date\":\"" + value2 + "\","
+        + " \"Accuracy\":\"" + value3 + "\"," + " \"Time\":\"" + value4 + "\"}";
 
     String reqUri = "http://localhost:4567/insert";
     HttpResponse<String> apiResponse = this.makePostReq(reqUri, insertValue);

@@ -1,15 +1,52 @@
 import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import useTyping from "react-typing-game-hook";
 
+
 interface IState {
     count: number;
 }
 
-const TypeThroughInput: FC<{ text: string }> = ({ text}) => {
+function delay(time: number) {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
+
+async function alertCaps(letter : string) {
+    let capsAlert = document.getElementById("caps-alert") as HTMLDivElement;
+    if (capsAlert.hidden === true && letter === "CapsLock") {
+        capsAlert.style.animation = 'fadeIn .65s';
+        capsAlert.hidden = false;
+    } else if (capsAlert.hidden === false && letter === "CapsLock") {
+        capsAlert.style.animation = 'fadeOut .65s';
+        await delay(500)
+        capsAlert.hidden = true;
+    } else{
+        capsAlert.hidden = false;
+        capsAlert.style.animation = 'fadeIn .65s';
+    }
+}
+
+const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indices}) => {
+    document.addEventListener('keydown', function(event){
+        if(event.key === "Escape"){
+            let lbInput = document.getElementById("lbInput") as HTMLInputElement;
+            let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
+            let lbInstructions = document.getElementById("lbInstructions") as HTMLDivElement;
+            lbInstructions.hidden=true;
+            lbInput.hidden=true; //hide username input box
+            lbButton.hidden=true; //hide username leaderboard submit button
+            let spans = document.getElementsByTagName('span');
+            resetTyping();
+            for (let i = 0; i < spans.length; i++)  {
+                spans[i].hidden = false;
+            }
+            setCounter(0); //resets counter to 0
+        }
+    });
     const [duration, setDuration] = useState(0);
     const [isFocused, setIsFocused] = useState(false);
     const letterElements = useRef<HTMLDivElement>(null);
-    let cnt = 0;
+    let cnt = -1;
+    let letterPrev = "";
     let keypresses = 0;
     const [count, setCounter] = useState(0);
     const state: IState = { count: 0 };
@@ -68,54 +105,61 @@ const TypeThroughInput: FC<{ text: string }> = ({ text}) => {
 
     //handle key presses
     const handleKeyDown = (letter: string, control: boolean) => {
-        let beforeErr = correctChar;
-        console.log("before", beforeErr);
+        let detIdx = 0;
         let spans = document.getElementsByTagName('span');
-        if (letter === "Escape") {
-            resetTyping();
+        console.log(count);
+        if (letter === "CapsLock") {
+            alertCaps(letter);
         } else if (letter === "Backspace") {
             deleteTyping(control);
-            decrement()
-            //console.log(keypresses)
+            if (count > 0) { //don't decrement count lower than 0
+                decrement()
+            }
+
+            for (let j = 0; j < indices.length; j++) {
+                if (count < indices[j] + 1) {
+                    detIdx = j
+                    break;
+                }
+            }
+
+            if (count < indices[0] + 1) {
+                for (let i = 0; i < indices[0]+1; i++) {
+                    spans[i].hidden = false;
+                }
+            } else if (count < indices[detIdx] + 1) {
+                for (let i = indices[detIdx - 1] + 1; i < indices[detIdx] + 1; i++) {
+                    spans[i].hidden = false;
+                }
+            }
         } else if (letter.length === 1) {
-            insertTyping(letter);
-            //console.log(keypresses)
-            keypresses += 1;
-            //console.log(keypresses)
-            let afterErr = correctChar;
-            console.log("after", afterErr)
-            console.log("count", count)
-
-            if (count < afterErr) {
-                //console.log("yup")
-                increment()
-                keypresses = 0
+            if (!(letterPrev === "Shift" || letter.toLowerCase() === letter)) {
+                alertCaps(letter);
             }
-            if (count === 24) {
-                for (let i = 0; i < 26; i++) {
-                    spans[i].hidden = true;
+            else {
+                let capsAlert = document.getElementById("caps-alert") as HTMLDivElement;
+                capsAlert.hidden = true;
+                insertTyping(letter);
+                keypresses += 1;
+                let afterErr = correctChar;
+                if (count < afterErr) {
+                    increment()
+                    keypresses = 0
+                }
+                if (indices.includes(count + 1)) { //count === indices[curr] - 1
+                    for (let i = 0; i < count + 2; i++) { //i < indices[curr] + 1
+                        spans[i].hidden = true;
+                    }
+                }
+                if (count === text.length - 1) {
+                    for (let i = 0; i < count + 2; i++) { //i < indices[curr] + 1
+                        spans[i].hidden = true;
+                    }
                 }
             }
-
-            if (count === 54) {
-                for (let i = 0; i < 56; i++) {
-                    spans[i].hidden = true;
-                }
-            }
-
-            if (count === 112) {
-                for (let i = 0; i < 114; i++) {
-                    spans[i].hidden = true;
-                }
-            }
-
-            if (count === 163) {
-                for (let i = 0; i < 165; i++) {
-                    spans[i].hidden = true;
-                }
-            }
-
         }
+        letterPrev = letter;
+        console.log(letterPrev);
     };
 
     return (
@@ -143,7 +187,8 @@ const TypeThroughInput: FC<{ text: string }> = ({ text}) => {
                                 ? "text-green-600"
                                 : "text-red-500";
 
-                        if (cnt === 26 || cnt === 56 || cnt === 114 || cnt === 165 || cnt === 221 || cnt === 247 || cnt === 280 || cnt === 310) {
+
+                        if (indices.includes(cnt)) {
                             return (
                                 <span id={index.toString()} key={letter + index} className={`${color}`}><p></p></span>
 
@@ -170,23 +215,38 @@ const TypeThroughInput: FC<{ text: string }> = ({ text}) => {
                 ) : null}
             </div>
             <p className="text-sm">
-                {phase === 2 && startTime && endTime ? (
-                    <>
-            <span className="text-green-500 mr-4">
-              WPM: {Math.round(((60 / duration) * correctChar) / 5)}
-            </span>
-                        <span className="text-blue-500 mr-4">
-              Accuracy: {((correctChar / text.length) * 100).toFixed(2)}%
-            </span>
-                        <span className="text-yellow-500 mr-4">Duration: {duration}s</span>
-                    </>
-                ) : null}
+                {phase === 2 && startTime && endTime ? doOnEnded() : null}
                 <span className="mr-4"> Current Index: {currIndex}</span>
                 <span className="mr-4"> Correct Characters: {correctChar}</span>
                 <span className="mr-4"> Error Characters: {errorChar}</span>
             </p>
         </div>
     );
+
+    function doOnEnded() {
+        let spans = document.getElementsByTagName('span');
+        for (let i = 0; i < text.length; i++) {
+            spans[i].hidden = true;
+        }
+        let lbInput = document.getElementById("lbInput") as HTMLInputElement;
+        let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
+        let lbInstructions = document.getElementById("lbInstructions") as HTMLDivElement;
+        lbInput.hidden=false;
+        lbButton.hidden=false;
+        lbInstructions.hidden=false;
+        return(
+            <>
+            <span id={"wpmLabel"} className="text-green-500 mr-4">
+              WPM: {Math.round(((60 / duration) * correctChar) / 5)}
+            </span>
+                <span id={"accuracyLabel"} className="text-blue-500 mr-4">
+              Accuracy: {(((correctChar - (errorChar)/4) / text.length) * 100).toFixed(2)}%
+            </span>
+                <span id={"durationLabel"} className="text-yellow-500 mr-4">Duration: {duration}s</span>
+
+            </>
+        )
+    }
 
 
 };

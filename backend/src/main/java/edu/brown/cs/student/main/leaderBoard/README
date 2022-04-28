@@ -5,24 +5,18 @@ Runs these commands for the API demo
     cd backend
     ./run --gui
 
-    load_database data/horoscopes.sqlite3
+    load_database data/leadboards.sqlite3
     verify_api database
-    verify_api table horoscopes
+    verify_api table song3
 
-    verify_api delete horoscopes horoscope Pisces
-    verify_api table horoscopes
+    verify_api insert song3 johnny 2022-10-23 73.1 6
+    verify_api insert song3 johnny 2022-10-23 73.1 5
+    verify_api insert song3 johnny 2022-10-23 73.1 4
+    verify_api insert song3 johnny 2022-10-23 73.1 3
+    verify_api insert song3 johnny 2022-10-23 73.1 2
+    verify_api insert song3 johnny 2022-10-23 73.1 1
 
-    verify_api insert horoscopes 12 Pisces
-    verify_api table horoscopes
-
-    verify_api update horoscopes horoscope Cancer horoscope_id 6
-    verify_api table horoscopes
-
-    verify_api update horoscopes horoscope Virgo horoscope_id 6
-    verify_api table horoscopes
-
-The demo can be run using any of the 3 database files, and any of the tables.
-
+//
 To run the system tests:
     cd backend
     ./cs32-test tests/sprint-3/student/dbIntegration/*.test
