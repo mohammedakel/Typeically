@@ -3,9 +3,9 @@ import TypingThroughInput from "./TypingThroughInput";
 
 interface PageProps {
     id: string
-    artist: string
-    songName: string
+    title: string
     lyrics: string
+    albumArt: string
 }
 let idxs = [] as number[];
 var Filter = require('bad-words'),
@@ -89,15 +89,6 @@ function contiguousValid() {
     }
 }
 
-function subsetsOfString(str: string, curr = '', index = 0) {
-    if (index == str.length) {
-        userSubstrings.push(curr);
-        return userSubstrings;
-    }
-    subsetsOfString(str, curr, index + 1);
-    subsetsOfString(str, curr + str[index], index + 1);
-}
-
 function contiguousSubstrings(str: string) {
     for (let i = 0; i < str.length; i++) {
         for (let j = i; j < str.length; j++) {
@@ -106,7 +97,7 @@ function contiguousSubstrings(str: string) {
     }
 }
 
-const TypingPage = ({id, artist, songName, lyrics}: PageProps) => {
+const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
 
     lyrics = lyrics.replace(/ *\[[^\]]*]/g, ''); //remove all strings in [square brackets] (ie, [intro], [verse 1], etc.)
     while(lyrics.charAt(0) === '\n') { //remove all leading \n line breaks at start of lyrics
@@ -136,7 +127,7 @@ const TypingPage = ({id, artist, songName, lyrics}: PageProps) => {
             <div className="container mx-auto flex flex-col p-4">
                 <h5>Esc to reset</h5>
                 <div className="border-2 p-4 rounded-lg">
-                    <h1 onMouseOver={showImage} onMouseLeave={hideImage} className="mb-2">{artist} - {songName}</h1>
+                    <h1 onMouseOver={showImage} onMouseLeave={hideImage} className="mb-2">{title}</h1>
 
                     <div id={"lyrics"} >
                         <TypingThroughInput
@@ -148,7 +139,7 @@ const TypingPage = ({id, artist, songName, lyrics}: PageProps) => {
                             }
                         />
                     </div>
-                    <div id={"image"} hidden > <img id={"albumArt"}src={"https://t2.genius.com/unsafe/576x576/https%3A%2F%2Fimages.genius.com%2Fe42bf41b71339f636619de3f6a8eb04d.1000x1000x1.jpg"} alt={""} ></img></div>
+                    <div id={"image"} hidden > <img id={"albumArt"}src={albumArt} alt={""} ></img></div>
                 </div>
             </div >
             <div className="container2">
