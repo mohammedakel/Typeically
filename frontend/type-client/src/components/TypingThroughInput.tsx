@@ -1,22 +1,47 @@
 import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import useTyping from "react-typing-game-hook";
 
+
 interface IState {
     count: number;
 }
 
-function alertCaps(letter : string) {
+function delay(time: number) {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
+
+async function alertCaps(letter : string) {
     let capsAlert = document.getElementById("caps-alert") as HTMLDivElement;
     if (capsAlert.hidden === true && letter === "CapsLock") {
+        capsAlert.style.animation = 'fadeIn .65s';
         capsAlert.hidden = false;
     } else if (capsAlert.hidden === false && letter === "CapsLock") {
+        capsAlert.style.animation = 'fadeOut .65s';
+        await delay(500)
         capsAlert.hidden = true;
     } else{
         capsAlert.hidden = false;
+        capsAlert.style.animation = 'fadeIn .65s';
     }
 }
 
 const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indices}) => {
+    document.addEventListener('keydown', function(event){
+        if(event.key === "Escape"){
+            let lbInput = document.getElementById("lbInput") as HTMLInputElement;
+            let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
+            let lbInstructions = document.getElementById("lbInstructions") as HTMLDivElement;
+            lbInstructions.hidden=true;
+            lbInput.hidden=true; //hide username input box
+            lbButton.hidden=true; //hide username leaderboard submit button
+            let spans = document.getElementsByTagName('span');
+            resetTyping();
+            for (let i = 0; i < spans.length; i++)  {
+                spans[i].hidden = false;
+            }
+            setCounter(0); //resets counter to 0
+        }
+    });
     const [duration, setDuration] = useState(0);
     const [isFocused, setIsFocused] = useState(false);
     const letterElements = useRef<HTMLDivElement>(null);
@@ -85,18 +110,6 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
         console.log(count);
         if (letter === "CapsLock") {
             alertCaps(letter);
-        } else if (letter === "Escape") {
-            let lbInput = document.getElementById("lbInput") as HTMLInputElement;
-            let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
-            let lbInstructions = document.getElementById("lbInstructions") as HTMLDivElement;
-            lbInstructions.hidden=true;
-            lbInput.hidden=true; //hide username input box
-            lbButton.hidden=true; //hide username leaderboard submit button
-            resetTyping();
-            for (let i = 0; i < spans.length; i++)  {
-                spans[i].hidden = false;
-            }
-            setCounter(0); //resets counter to 0
         } else if (letter === "Backspace") {
             deleteTyping(control);
             if (count > 0) { //don't decrement count lower than 0

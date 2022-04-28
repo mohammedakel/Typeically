@@ -34,7 +34,7 @@ async function showImage() {
     let spans = document.getElementsByTagName("span");
     let albumArt = document.getElementById("albumArt") as HTMLImageElement;
     img.hidden = false;
-    img.style.animation = 'fadeIn .65s, searchmate .9s steps(75, end) forwards';
+    img.style.animation = 'fadeIn .65s';
 
     for (let i = 0; i < spans.length; i++) {
         spans[i].style.opacity = "0";
@@ -128,7 +128,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
                 window.location.reload();
             }}>Typeically</a></h1>
             <div className="container mx-auto flex flex-col p-4">
-                <h5>Esc to reset</h5>
+                <h5 id={"escape-instruct"}>Esc to reset</h5>
                 <div className="border-2 p-4 rounded-lg">
                     <h1 onMouseOver={showImage} onMouseLeave={hideImage} className="mb-2">{title}</h1>
 
@@ -143,6 +143,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
                         />
                     </div>
                     <div id={"image"} hidden > <img id={"albumArt"}src={albumArt} alt={""} ></img></div>
+                    <div id={"caps-alert"} hidden> Warning: Caps Lock Detected </div>
                 </div>
             </div >
             <div className="container2">

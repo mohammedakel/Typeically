@@ -260,7 +260,8 @@
     padding: 35px;
     border-radius: 7px;
     border: 2px solid #999999;
-    background:rgba(0,0,0,0.15);
+    background:rgba(35, 46, 69,0.75);
+    backdrop-filter: blur(2.5px);
     box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.5);
     animation: fadeIn .7s forwards;
 }
@@ -284,12 +285,6 @@
 @keyframes fadeIn {
     0% {opacity:0;}
     100% {opacity:1;}
-}
-
-@keyframes fadeInOut {
-    0% {opacity:0;}
-    20% {opacity:1;}
-    100% {opacity:0;}
 }
 
 @-moz-keyframes fadeIn {
