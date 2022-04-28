@@ -10,6 +10,7 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
     const [isFocused, setIsFocused] = useState(false);
     const letterElements = useRef<HTMLDivElement>(null);
     let cnt = -1;
+    let letterPrev = "";
     let keypresses = 0;
     const [count, setCounter] = useState(0);
     const state: IState = { count: 0 };
@@ -71,7 +72,9 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
         let detIdx = 0;
         let spans = document.getElementsByTagName('span');
         console.log(count);
-        if (letter === "Escape") {
+        if (letter === "CapsLock") {
+            alert("Warning: Caps lock was pressed")
+        } else if (letter === "Escape") {
             let lbInput = document.getElementById("lbInput") as HTMLInputElement;
             let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
             let lbInstructions = document.getElementById("lbInstructions") as HTMLDivElement;
@@ -106,25 +109,31 @@ const TypeThroughInput: FC<{ text: string, indices: number[] }> = ({ text, indic
                 }
             }
         } else if (letter.length === 1) {
-            insertTyping(letter);
-            keypresses += 1;
-            let afterErr = correctChar;
-            if (count < afterErr) {
-                increment()
-                keypresses = 0
+            if (!(letterPrev === "Shift" || letter.toLowerCase() === letter)) {
+                alert("check your caps mama")
             }
-            if (indices.includes(count + 1)) { //count === indices[curr] - 1
-                for (let i = 0; i < count + 2; i++) { //i < indices[curr] + 1
-                    spans[i].hidden = true;
+            else {
+                insertTyping(letter);
+                keypresses += 1;
+                let afterErr = correctChar;
+                if (count < afterErr) {
+                    increment()
+                    keypresses = 0
+                }
+                if (indices.includes(count + 1)) { //count === indices[curr] - 1
+                    for (let i = 0; i < count + 2; i++) { //i < indices[curr] + 1
+                        spans[i].hidden = true;
+                    }
+                }
+                if (count === text.length - 1) {
+                    for (let i = 0; i < count + 2; i++) { //i < indices[curr] + 1
+                        spans[i].hidden = true;
+                    }
                 }
             }
-            if (count === text.length -1) {
-                for (let i = 0; i < count + 2; i++) { //i < indices[curr] + 1
-                    spans[i].hidden = true;
-                }
-            }
-
         }
+        letterPrev = letter;
+        console.log(letterPrev);
     };
 
     return (
