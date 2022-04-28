@@ -88,7 +88,8 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             let wpm = lbInput.getAttribute("wpm");
             let accuracy = lbInput.getAttribute("acc");
             let duration = lbInput.getAttribute("duration");
-            console.log("wpm: " + wpm + ", accuracy: " + accuracy + ", duration: " + duration);
+            let username = lbInput.value;
+            console.log("username: " + username + ", wpm: " + wpm + ", accuracy: " + accuracy + ", duration: " + duration);
 
             //ADD RESULTS TO LEADERBOARD HERE!!
 
