@@ -174,8 +174,8 @@ public class VerifyAPI implements REPLable {
    */
   public void insertEndpoint(String tableName, String value1, String value2, String value3, String value4) {
     String insertValue =  "{\"tableName\":\"" + tableName + "\","
-        + " \"Username\":\"" + value1 + "\"," + " \"Date\":\"" + value2 + "\","
-        + " \"Accuracy\":\"" + value3 + "\"," + " \"Time\":\"" + value4 + "\"}";
+        + " \"Username\":\"" + value1 + "\"," + " \"WPM\":\"" + value2 + "\","
+        + " \"Accuracy (%)\":\"" + value3 + "\"," + " \"Duration (s)\":\"" + value4 + "\"}";
 
     String reqUri = "http://localhost:4567/insert";
     HttpResponse<String> apiResponse = this.makePostReq(reqUri, insertValue);

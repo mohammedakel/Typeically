@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Table from "./Table";
 import TypingThroughInput from "./TypingThroughInput";
 
 interface PageProps {
@@ -13,91 +14,11 @@ var Filter = require('bad-words'),
 userFilter.removeWords('xxx', 'hell', 'yed');
 
 
-
-function delay(time: number) {
-    return new Promise(resolve => setTimeout(resolve, time));
-}
-
-async function hideImage() {
-    let img = document.getElementById("image") as HTMLDivElement;
-    let spans = document.getElementsByTagName("span");
-    img.style.animation = 'fadeOut .65s, searchmate .9s steps(75, end) forwards';
-    for (let i = 0; i < spans.length; i++) {
-        spans[i].style.opacity = "1";
-    }
-    await delay(500);
-    img.hidden = true;
-}
-
-async function showImage() {
-    let img = document.getElementById("image") as HTMLDivElement;
-    let spans = document.getElementsByTagName("span");
-    let albumArt = document.getElementById("albumArt") as HTMLImageElement;
-    img.hidden = false;
-    img.style.animation = 'fadeIn .65s';
-
-    for (let i = 0; i < spans.length; i++) {
-        spans[i].style.opacity = "0";
-    }
-}
-
-
-function submitUser() {
-    let lbInput = document.getElementById("lbInput") as HTMLInputElement;
-    let invalidLabel = document.getElementById("invalidUserLabel") as HTMLElement;
-    if (contiguousValid()) {
-        //ADD RESULTS TO LEADERBOARD
-        lbInput.className = lbInput.className.replace(" invalid", "");
-        lbInput.className = lbInput.className.replace(" valid", "");
-        lbInput.className = lbInput.className + " valid";
-        invalidLabel.hidden = true;
-    } else {
-        lbInput.className = lbInput.className.replace(" invalid", "");
-        lbInput.className = lbInput.className.replace(" valid", "");
-        lbInput.className = lbInput.className + " invalid";
-        invalidLabel.hidden = false;
-    }
-}
-
-function contiguousValid() {
-    userSubstrings = [];
-    let lbInput = document.getElementById("lbInput") as HTMLInputElement;
-    contiguousSubstrings(lbInput.value)
-    for (let j = 0; j < userSubstrings.length; j++) {
-        if (userFilter.isProfane(userSubstrings[j])) {
-            wasProfane = true;
-            break;
-        }
-        if (userFilter.isProfane(userSubstrings[j].replace("x", ""))) {
-            wasProfane = true;
-            break;
-        }
-        if (userFilter.isProfane(userSubstrings[j].replace("-", ""))) {
-            wasProfane = true;
-            break;
-        }
-        if (userFilter.isProfane(userSubstrings[j].replace("_", ""))) {
-            wasProfane = true;
-            break;
-        }
-    }
-    if (wasProfane) {
-        wasProfane = false;
-        return false;
-    } else {
-        return true;
-    }
-}
-
-function contiguousSubstrings(str: string) {
-    for (let i = 0; i < str.length; i++) {
-        for (let j = i; j < str.length; j++) {
-            userSubstrings.push(str.slice(i, j + 1));
-        }
-    }
-}
-
 const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
+
+    const [selectedTable, setSelectedTable] = useState<string>("")
+    const [rowToInsert, setRowToInsert] = useState<Map<string, string>>(new Map())
+
     //replace last ' by ' in title with hyphen ("-")
     var n = title.lastIndexOf(" by ");
     title = title.slice(0, n) + title.slice(n).replace("by", "-");
@@ -122,6 +43,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
     lyrics = lyrics.replace(/—/g, '-') //replace weird longer hyphen with standard hyphen
     lyrics = lyrics.replace(/[^0-9a-z!\s@#$%^&*()_+={}|:;'"<>,.?/~`-]/gi, '?') //replace any unrecognized characters not on english keyboards with ?
 
+    // @ts-ignore
     return (
         <div>
             <h1><a className={"t1"} href='.' onClick={(event: React.MouseEvent<HTMLElement>) => {
@@ -156,7 +78,128 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             <div className="labelContainer">
                 <div id={"invalidUserLabel"}className="typed-out2" hidden>profanity detected in username ;( please try something else</div>
             </div>
+
+            <Table selectedTable={selectedTable} rowToInsert = {rowToInsert}/>
         </div>
     );
+
+    /**
+     * Handles leaderboard submission logic, and is called when the user clicks the lbButton element!
+     */
+    function submitUser() {
+        let lbInput = document.getElementById("lbInput") as HTMLInputElement;
+        let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
+        let invalidLabel = document.getElementById("invalidUserLabel") as HTMLElement;
+        if (contiguousValid()) {
+            let tableId = id; //'id' is the song id associated with the song, obtained from the Genius API
+            let wpm = lbInput.getAttribute("wpm");
+            let accuracy = lbInput.getAttribute("acc");
+            let duration = lbInput.getAttribute("duration");
+            let username = lbInput.value;
+
+            let newAddInfo = new Map(rowToInsert);
+            newAddInfo.set("Username", username)
+            if (typeof wpm === "string") {
+                newAddInfo.set("WPM", wpm)
+            }
+            if (typeof accuracy === "string") {
+                newAddInfo.set("Accuracy (%)", accuracy.replace("%",""))
+            }
+
+            if (typeof duration === "string") {
+                newAddInfo.set("Duration (s)", duration.replace("s",""))
+            }
+
+            setRowToInsert(newAddInfo)
+            setSelectedTable(id)
+            console.log("username: " + username + ", wpm: " + wpm + ", accuracy: " + accuracy + ", duration: " + duration);
+
+
+            //ADD RESULTS TO LEADERBOARD HERE!!
+
+
+
+            //here, we update the color of the border to indicate the user was accepted and leaderboard was updated:
+            lbInput.className = lbInput.className.replace(" invalid", "");
+            lbInput.className = lbInput.className.replace(" valid", "");
+            lbInput.className = lbInput.className + " valid";
+            invalidLabel.hidden = true;
+
+            //hide username input and submit button so that users cannot click submit again after successful submission:
+            lbInput.hidden = true;
+            lbButton.hidden = true;
+        } else {
+            lbInput.className = lbInput.className.replace(" invalid", "");
+            lbInput.className = lbInput.className.replace(" valid", "");
+            lbInput.className = lbInput.className + " invalid";
+            invalidLabel.hidden = false;
+        }
+    }
+
+    function delay(time: number) {
+        return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+    async function hideImage() {
+        let img = document.getElementById("image") as HTMLDivElement;
+        let spans = document.getElementsByTagName("span");
+        img.style.animation = 'fadeOut .65s, searchmate .9s steps(75, end) forwards';
+        for (let i = 0; i < spans.length; i++) {
+            spans[i].style.opacity = "1";
+        }
+        await delay(500);
+        img.hidden = true;
+    }
+
+    async function showImage() {
+        let img = document.getElementById("image") as HTMLDivElement;
+        let spans = document.getElementsByTagName("span");
+        let albumArt = document.getElementById("albumArt") as HTMLImageElement;
+        img.hidden = false;
+        img.style.animation = 'fadeIn .65s';
+
+        for (let i = 0; i < spans.length; i++) {
+            spans[i].style.opacity = "0";
+        }
+    }
+
+    function contiguousValid() {
+        userSubstrings = [];
+        let lbInput = document.getElementById("lbInput") as HTMLInputElement;
+        contiguousSubstrings(lbInput.value)
+        for (let j = 0; j < userSubstrings.length; j++) {
+            if (userFilter.isProfane(userSubstrings[j])) {
+                wasProfane = true;
+                break;
+            }
+            if (userFilter.isProfane(userSubstrings[j].replace("x", ""))) {
+                wasProfane = true;
+                break;
+            }
+            if (userFilter.isProfane(userSubstrings[j].replace("-", ""))) {
+                wasProfane = true;
+                break;
+            }
+            if (userFilter.isProfane(userSubstrings[j].replace("_", ""))) {
+                wasProfane = true;
+                break;
+            }
+        }
+        if (wasProfane) {
+            wasProfane = false;
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function contiguousSubstrings(str: string) {
+        for (let i = 0; i < str.length; i++) {
+            for (let j = i; j < str.length; j++) {
+                userSubstrings.push(str.slice(i, j + 1));
+            }
+        }
+    }
+
 }
 export default TypingPage

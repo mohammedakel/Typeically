@@ -145,9 +145,9 @@ public class InsertHandler implements Route {
   public void createTable (String tableName) throws SQLException {
     String sql = "CREATE TABLE IF NOT EXISTS " + tableName + "("
         + "Username TEXT,"
-        + "Date DATE,"
-        + "Accuracy NUMERIC,"
-        + "Time NUMERIC);";
+        + "WPM NUMERIC,"
+        + "\"Accuracy (%)\" NUMERIC,"
+        + "\"Duration (s)\" NUMERIC);";
 
     PreparedStatement tableStatement = databaseLoader.getConn().prepareStatement(sql);
     tableStatement.executeUpdate();

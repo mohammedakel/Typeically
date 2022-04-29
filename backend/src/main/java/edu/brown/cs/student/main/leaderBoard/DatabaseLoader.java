@@ -168,7 +168,7 @@ public class DatabaseLoader implements REPLable {
       List<Map<String, String>> tableData = new ArrayList<>();
       List<String> columnNames = storedDatabase.getColumnNames(name);
 
-      String sql = "SELECT * FROM " + name + " ORDER BY Time ASC LIMIT 5;";
+      String sql = "SELECT * FROM " + name + " ORDER BY \"Duration (s)\" ASC LIMIT 5;";
 
       try {
         PreparedStatement dataStatement = conn.prepareStatement(sql);

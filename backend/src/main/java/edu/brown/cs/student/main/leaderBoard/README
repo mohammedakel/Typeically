@@ -9,7 +9,7 @@ Runs these commands for the API demo
     verify_api database
     verify_api table song3
 
-    verify_api insert song3 johnny 2022-10-23 73.1 6
+    verify_api insert song43 johnny 32 97.39 10
     verify_api insert song3 johnny 2022-10-23 73.1 5
     verify_api insert song3 johnny 2022-10-23 73.1 4
     verify_api insert song3 johnny 2022-10-23 73.1 3

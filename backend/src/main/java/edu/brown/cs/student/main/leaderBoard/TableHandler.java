@@ -45,7 +45,7 @@ public class TableHandler implements Route {
       List<Map<String, String>> tableData = databaseLoader.getStoredDatabase().getTableData(tableName);
       List<List<String>> rowData = new ArrayList<>();
 
-      if (tableColumnNames == null){
+      if (tableColumnNames == null || tableData == null){
         Map error1 = ImmutableMap.of("error", "Table does not exist.");
         return GSON.toJson(error1);
 
