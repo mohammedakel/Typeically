@@ -3,6 +3,7 @@ package edu.brown.cs.student.main.leaderBoard;
 // imports
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
+import edu.brown.cs.student.main.Main;
 import org.json.JSONException;
 import org.json.JSONObject;
 import spark.Request;
@@ -24,10 +25,10 @@ public class InsertHandler implements Route {
   /**
    * It takes in a database loader, which it uses to get the stored database shared
    * between the loader and all the handlers.
-   * @param databaseLoader has the storedDatabase
+   *
    */
   public InsertHandler(DatabaseLoader databaseLoader) {
-    this.databaseLoader = databaseLoader;
+    this.databaseLoader =databaseLoader;
   }
 
   /**
@@ -42,7 +43,15 @@ public class InsertHandler implements Route {
   public Object handle(Request request, Response response) {
     Gson GSON = new Gson();
 
+    if (databaseLoader.getConn() == null) {
+      List<String> args = new ArrayList<>();
+      args.add("load_database");
+      args.add("data/leadboards.sqlite3");
+      databaseLoader.execute(args);
+    }
+
     if (databaseLoader.getConn() != null) {
+
       JSONObject requestJSON = null;
       try {
         requestJSON = new JSONObject(request.body());
