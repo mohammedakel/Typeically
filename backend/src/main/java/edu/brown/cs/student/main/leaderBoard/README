@@ -1,0 +1,32 @@
+README DatabaseIntegration - Johnny Boustany
+
+Runs these commands for the API demo
+(while making sure to not change anything for good):
+    cd backend
+    ./run --gui
+
+    load_database data/leadboards.sqlite3
+    verify_api database
+    verify_api table song3
+
+    verify_api insert song43 johnny 32 97.39 10
+    verify_api insert song3 johnny 2022-10-23 73.1 5
+    verify_api insert song3 johnny 2022-10-23 73.1 4
+    verify_api insert song3 johnny 2022-10-23 73.1 3
+    verify_api insert song3 johnny 2022-10-23 73.1 2
+    verify_api insert song3 johnny 2022-10-23 73.1 1
+
+//
+To run the system tests:
+    cd backend
+    ./cs32-test tests/sprint-3/student/dbIntegration/*.test
+
+To run the Junit tests:
+    cd backend
+    mvn test
+
+20 hours
+
+
+
+

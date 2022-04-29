@@ -11,6 +11,7 @@ const Searcher = ({onLoad: handleSearch}) => {
             e.preventDefault();
         }
     }, false);
+
     return (
         <div id="load-page" >
             <h1 className="t1">Typeically</h1>
