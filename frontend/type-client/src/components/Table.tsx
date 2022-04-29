@@ -80,7 +80,7 @@ function Table(props : {selectedTable : string, rowToInsert : Map<string, string
     }
 
     // Loads the new table when the selected table changes.
-    useEffect(() => {if (props.rowToInsert !== new Map()) {insertValue(props.rowToInsert)}}, [props.selectedTable])
+    useEffect(() => {if (props.rowToInsert !== new Map()) {insertValue(props.rowToInsert)}}, [props.rowToInsert])
 
     return (
       <div >

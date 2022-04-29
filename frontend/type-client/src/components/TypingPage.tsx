@@ -18,7 +18,12 @@ userFilter.removeWords('xxx', 'hell', 'yed');
 
 const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
 
-
+    document.addEventListener('keydown', function(event){
+        if(event.key === "Escape"){
+            setRowToInsert(new Map())
+        }
+    });
+    
     const [selectedTable, setSelectedTable] = useState<string>("")
     const [rowToInsert, setRowToInsert] = useState<Map<string, string>>(new Map())
       
