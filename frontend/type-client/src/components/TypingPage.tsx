@@ -21,6 +21,8 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
     document.addEventListener('keydown', function(event){
         if(event.key === "Escape"){
             setRowToInsert(new Map())
+            let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
+            lbButton.style.display = "";
         }
     });
     
@@ -99,6 +101,8 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
         let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
         let invalidLabel = document.getElementById("invalidUserLabel") as HTMLElement;
         if (contiguousValid()) {
+            //hide submit button so that users cannot click submit again after successful submission:
+            lbButton.style.display = "none";
             let tableId = id; //'id' is the song id associated with the song, obtained from the Genius API
             let wpm = lbInput.getAttribute("wpm");
             let accuracy = lbInput.getAttribute("acc");
@@ -133,9 +137,6 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             lbInput.className = lbInput.className + " valid";
             invalidLabel.hidden = true;
 
-            //hide username input and submit button so that users cannot click submit again after successful submission:
-            lbInput.hidden = true;
-            lbButton.hidden = true;
         } else {
             lbInput.className = lbInput.className.replace(" invalid", "");
             lbInput.className = lbInput.className.replace(" valid", "");

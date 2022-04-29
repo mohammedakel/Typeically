@@ -42,6 +42,7 @@ const TypeThroughInput: FC<{ text: string, indices: number[]}> = ({ text, indice
             setCounter(0); //resets counter to 0
         }
     });
+
     const [duration, setDuration] = useState(0);
     const [isFocused, setIsFocused] = useState(false);
     const letterElements = useRef<HTMLDivElement>(null);
