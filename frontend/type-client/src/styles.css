@@ -32,8 +32,10 @@
 .mb-2 {
     color: white;
     font-family: serif;
-    font-size: 20px
+    font-size: 20px;
+    width: max-content;
 }
+
 
 #load-page {
     display: flex;
@@ -78,16 +80,23 @@
             .5px -.5px 0 #a1a1a1,
             -1px 1px 0 #a1a1a1,
             1px 1px 0 #a1a1a1;
+    animation: fadeIn linear .6s;
+    -webkit-animation: fadeIn linear .6s;
+    -moz-animation: fadeIn linear .6s;
+    -o-animation: fadeIn linear .6s;
+    -ms-animation: fadeIn linear .6s;
+
 }
 
 .button {
     flex:.15;
     color: #a1a1a1;
-    background-color: #696969;
+    background-color: #595959;
     padding: 3px;
     border-radius: 3px;
-    text-align: center;
-    font-size: 105px;
+    width: 70px;
+    height: 40px;
+    font-size: 18px
 }
 
 
@@ -96,9 +105,11 @@
     height: 40px;
     justify-content: space-between;
     display: flex;
-    width: 30%;
+    width: 0;
     margin: 1.5em auto;
-    border:0px
+    border:0px;
+    animation: searchmate .3s steps(75, end) forwards,
+                fadeIn .5s linear
 }
 
 .search {
@@ -108,6 +119,8 @@
     border-radius: 7px;
     padding: 6px;
     font-size: 20px;
+    animation: searchmate .9s steps(75, end) forwards
+
 }
 
 .lbInputs {
@@ -127,7 +140,20 @@
     border-radius: 7px;
     padding: 6px;
     font-size: 20px;
+    border: 1.5px solid #27334d;
+    outline:none;
 }
+
+.invalid {
+    border: 1.5px solid #e02626;
+    transition: .2s steps(20, end);
+}
+
+.valid {
+    border: 1.5px solid lightgreen;
+    transition: .2s steps(20, end);
+}
+
 
 .button2 {
 
@@ -136,4 +162,152 @@
     background-color: #595959;
     padding: 3px;
     border-radius: 3px;
+    width: 70px;
+    height: 40px;
+    font-size: 18px;
+    animation: fadeIn linear 1.25s;
+}
+
+#wpmLabel {
+    font-size: 32px;
+    font-family: Helvetica, monospace;
+    animation: fadeIn linear 2s;
+    -webkit-animation: fadeIn linear 2s;
+    -moz-animation: fadeIn linear 2s;
+    -o-animation: fadeIn linear 2s;
+    -ms-animation: fadeIn linear 2s;
+}
+
+#accuracyLabel {
+    font-size: 32px;
+    font-family: Helvetica, monospace;
+    animation: fadeIn linear 2s;
+    -webkit-animation: fadeIn linear 2s;
+    -moz-animation: fadeIn linear 2s;
+    -o-animation: fadeIn linear 2s;
+    -ms-animation: fadeIn linear 2s;
+}
+
+#durationLabel {
+    font-size: 32px;
+    font-family: Helvetica, monospace;
+    color: orange;
+    animation: fadeIn linear 2s;
+    -webkit-animation: fadeIn linear 2s;
+    -moz-animation: fadeIn linear 2s;
+    -o-animation: fadeIn linear 2s;
+    -ms-animation: fadeIn linear 2s;
+}
+
+
+.typed-out{
+    color: #939393;
+    overflow: hidden;
+    border-right: .55em solid pink;
+    white-space: nowrap;
+    font-size: 1.6rem;
+    font-family: Helvetica, monospace;
+    margin: auto;
+    animation: typing 1s steps(200, end) forwards,
+    fadeIn linear 1.25s;
+}
+
+.typed-out2{
+    color: #e36f6f;
+    overflow: hidden;
+    border-right: .4em solid red;
+    width: 20%;
+    white-space: nowrap;
+    font-size: .8rem;
+    font-family: Helvetica, monospace;
+    margin: auto;
+    animation: typing 1s steps(200, end) forwards,
+    fadeIn linear 1.25s;
+    text-align: center;
+}
+
+
+
+.search2 {
+    overflow: hidden;
+    width: 0px;
+    border-radius: 6px;
+    position: absolute;
+    animation: fadeIn 1.25s, searchmate .9s steps(75, end) forwards
+
+}
+
+
+#albumArt {
+    max-height:500px;
+    position: fixed;
+    left: 16.5vh;
+    top: 22.5vh;
+}
+
+#image {
+    animation: fadeIn .65s, searchmate .9s steps(75, end) forwards;
+    box-shadow: 0 0 0 9999px #000000b0;
+}
+
+#caps-alert {
+    position: fixed;
+    left: 60vh;
+    top: 65vh;
+
+    font-size: 30px;
+    font-family: monospace;
+    padding: 35px;
+    border-radius: 7px;
+    border: 2px solid #999999;
+    background:rgba(35, 46, 69,0.75);
+    backdrop-filter: blur(2.5px);
+    box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.5);
+    animation: fadeIn .7s forwards;
+}
+
+@keyframes searchmate {
+    from {width: 0px}
+    to {width: 375px}
+}
+
+@keyframes typing {
+    from { width: 0}
+    to { width: 34.5%; border-right: 0em solid white }
+}
+
+@keyframes typingT1{
+    from { width: 0}
+    to { width: 23%; border-right: 0em solid white }
+}
+
+
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@keyframes fadeOut {
+    0% {opacity:1;}
+    100% {opacity:0;}
 }

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+
 import Table from "./Table";
+
 import TypingThroughInput from "./TypingThroughInput";
 
 interface PageProps {
@@ -16,9 +18,10 @@ userFilter.removeWords('xxx', 'hell', 'yed');
 
 const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
 
+
     const [selectedTable, setSelectedTable] = useState<string>("")
     const [rowToInsert, setRowToInsert] = useState<Map<string, string>>(new Map())
-
+      
     //replace last ' by ' in title with hyphen ("-")
     var n = title.lastIndexOf(" by ");
     title = title.slice(0, n) + title.slice(n).replace("by", "-");
@@ -97,6 +100,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             let duration = lbInput.getAttribute("duration");
             let username = lbInput.value;
 
+
             let newAddInfo = new Map(rowToInsert);
             newAddInfo.set("Username", username)
             if (typeof wpm === "string") {
@@ -113,7 +117,6 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             setRowToInsert(newAddInfo)
             setSelectedTable(id)
             console.log("username: " + username + ", wpm: " + wpm + ", accuracy: " + accuracy + ", duration: " + duration);
-
 
             //ADD RESULTS TO LEADERBOARD HERE!!
 
