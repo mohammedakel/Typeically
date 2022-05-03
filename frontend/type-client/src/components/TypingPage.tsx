@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Table from "./Table";
-
+import moment from 'moment';
 import TypingThroughInput from "./TypingThroughInput";
 
 interface PageProps {
@@ -21,8 +21,11 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
     document.addEventListener('keydown', function(event){
         if(event.key === "Escape"){
             setRowToInsert(new Map())
+            let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
+            lbButton.style.display = ""
         }
     });
+
     
     const [selectedTable, setSelectedTable] = useState<string>("")
     const [rowToInsert, setRowToInsert] = useState<Map<string, string>>(new Map())
@@ -87,7 +90,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
                 <div id={"invalidUserLabel"}className="typed-out2" hidden>profanity detected in username ;( please try something else</div>
             </div>
 
-            <Table selectedTable={selectedTable} rowToInsert = {rowToInsert}/>
+            <Table selectedTable={selectedTable} rowToInsert = {rowToInsert} setRowToInsert={setRowToInsert}/>
         </div>
     );
 
@@ -97,6 +100,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
     function submitUser() {
         let lbInput = document.getElementById("lbInput") as HTMLInputElement;
         let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
+        lbButton.style.display = "none"
         let invalidLabel = document.getElementById("invalidUserLabel") as HTMLElement;
         if (contiguousValid()) {
             let tableId = id; //'id' is the song id associated with the song, obtained from the Genius API
@@ -105,9 +109,10 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             let duration = lbInput.getAttribute("duration");
             let username = lbInput.value;
 
-
             let newAddInfo = new Map(rowToInsert);
             newAddInfo.set("Username", username)
+            newAddInfo.set("Date", moment().format("DD-MM-YYYY"))
+
             if (typeof wpm === "string") {
                 newAddInfo.set("WPM", wpm)
             }
@@ -119,12 +124,12 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
                 newAddInfo.set("Duration (s)", duration.replace("s",""))
             }
 
+
             setRowToInsert(newAddInfo)
-            setSelectedTable(id)
+            setSelectedTable(tableId)
             console.log("username: " + username + ", wpm: " + wpm + ", accuracy: " + accuracy + ", duration: " + duration);
 
             //ADD RESULTS TO LEADERBOARD HERE!!
-
 
 
             //here, we update the color of the border to indicate the user was accepted and leaderboard was updated:

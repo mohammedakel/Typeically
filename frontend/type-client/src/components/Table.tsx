@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
 // @ts-ignore
 import axios from 'axios';
-// @ts-ignore
 
 /**
  * Functional component with the table displayed and options to make changes to it.
  * @param props the name of the selected table (from the dropdown)
  */
-function Table(props : {selectedTable : string, rowToInsert : Map<string, string>}) {
+function Table(props : {selectedTable : string, rowToInsert : Map<string, string>, setRowToInsert: (m : Map<string,string>) => void}) {
     const [columnNames, setColumnNames] = useState<string[]>([])
     const [tableData, setTableData] = useState([[]])
     const HOST_URL: string = "http://localhost:4567"
@@ -29,6 +28,7 @@ function Table(props : {selectedTable : string, rowToInsert : Map<string, string
             {columnNames.map(header => (
                 <th>
                     {header}
+
                 </th>
             ))}
             </tr>
@@ -65,12 +65,13 @@ function Table(props : {selectedTable : string, rowToInsert : Map<string, string
         }
         requestBody += " \"" + newColumnNames[newColumnNames.length-1] + "\":\"" + row.get(newColumnNames[newColumnNames.length-1]) + "\"}"
 
-        if (props.selectedTable !== "") {
+        if (props.selectedTable !== "" && props.rowToInsert.size == 5) {
             axios.post(HOST_URL + "/insert", requestBody, config)
                 .then((response: any) => {
                     if(response.data['columnNames'] != null && response.data['rowData'] != null){
                         setColumnNames(response.data['columnNames'])
                         setTableData(response.data['rowData'])
+                        props.setRowToInsert(new Map())
                     }
                 })
                 .catch((error: any) => {
@@ -79,13 +80,13 @@ function Table(props : {selectedTable : string, rowToInsert : Map<string, string
         }
     }
 
-    // Loads the new table when the selected table changes.
+    // Loads the table when the inserted row changes.
     useEffect(() => {if (props.rowToInsert !== new Map()) {insertValue(props.rowToInsert)}}, [props.rowToInsert])
 
     return (
       <div >
           <br/>
-          <table id="content" style={{
+          <table id="leaderboard" style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

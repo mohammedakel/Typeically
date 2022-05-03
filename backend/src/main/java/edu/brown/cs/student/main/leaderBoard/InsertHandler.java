@@ -63,7 +63,6 @@ public class InsertHandler implements Route {
 
       try {
         tableName = requestJSON.getString("tableName");
-        System.out.println(tableName);
       } catch (JSONException e) {
         System.out.println("ERROR: Invalid parameters passed in.");
       }
@@ -154,6 +153,7 @@ public class InsertHandler implements Route {
   public void createTable (String tableName) throws SQLException {
     String sql = "CREATE TABLE IF NOT EXISTS " + tableName + "("
         + "Username TEXT,"
+        + "\"Date\" DATE,"
         + "WPM NUMERIC,"
         + "\"Accuracy (%)\" NUMERIC,"
         + "\"Duration (s)\" NUMERIC);";
