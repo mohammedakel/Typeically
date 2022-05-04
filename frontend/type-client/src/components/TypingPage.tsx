@@ -111,7 +111,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
 
             let newAddInfo = new Map(rowToInsert);
             newAddInfo.set("Username", username)
-            newAddInfo.set("Date", moment().format("DD-MM-YYYY"))
+            newAddInfo.set("Date", moment().format("MM-DD-YYYY"))
 
             if (typeof wpm === "string") {
                 newAddInfo.set("WPM", wpm)
