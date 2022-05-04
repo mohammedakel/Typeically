@@ -134,7 +134,7 @@
 
 .search2 {
 
-    flex:.83;
+    flex: .83;
     color: #a1a1a1;
     background-color: #525252;
     border-radius: 7px;
@@ -156,8 +156,6 @@
 
 
 .button2 {
-
-    flex:.15;
     color: #a1a1a1;
     background-color: #595959;
     padding: 3px;
@@ -205,12 +203,19 @@
     overflow: hidden;
     border-right: .55em solid pink;
     white-space: nowrap;
-    font-size: 1.6rem;
+    font-size: 1.6em;
     font-family: Helvetica, monospace;
-    margin: auto;
-    animation: typing 1s steps(200, end) forwards,
+
+    animation: typing 1s steps(50, end) forwards,
     fadeIn linear 1.25s;
 }
+
+.container2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 .typed-out2{
     color: #e36f6f;
@@ -232,8 +237,8 @@
     overflow: hidden;
     width: 0px;
     border-radius: 6px;
-    position: absolute;
-    animation: fadeIn 1.25s, searchmate .9s steps(75, end) forwards
+    position: relative;
+    animation: fadeIn 1.25s, searchmate .9s steps(75, end) forwards;
 
 }
 
@@ -273,7 +278,7 @@
 
 @keyframes typing {
     from { width: 0}
-    to { width: 34.5%; border-right: 0em solid white }
+    to { width: 20.5em; border-right: 0em solid white }
 }
 
 @keyframes typingT1{
