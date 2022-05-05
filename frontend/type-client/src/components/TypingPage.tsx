@@ -110,7 +110,11 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             let username = lbInput.value;
 
             let newAddInfo = new Map(rowToInsert);
-            newAddInfo.set("Username", username)
+
+            if (username !== ""){
+                newAddInfo.set("Username", username)
+            }
+
             newAddInfo.set("Date", moment().format("MM-DD-YYYY"))
 
             if (typeof wpm === "string") {
