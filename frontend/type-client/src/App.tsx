@@ -5,7 +5,7 @@ import Searcher from "./components/Searcher";
 
 var geniusLyricsAPI = require("genius-lyrics-api")
 
-// Here indices represents the search results
+// Here indices represents the search results for the program
 var lyrics = ' '
 var indices : any
 
