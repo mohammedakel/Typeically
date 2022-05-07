@@ -3,20 +3,48 @@ import TypingPage from "./components/TypingPage";
 import "./styles.css";
 import Searcher from "./components/Searcher";
 
-let albumArt = "https://t2.genius.com/unsafe/576x576/https%3A%2F%2Fimages.genius.com%2Fe42bf41b71339f636619de3f6a8eb04d.1000x1000x1.jpg"
-let title = "FEEL A WAY by Amaarae"
+var geniusLyricsAPI = require("genius-lyrics-api")
 
-let id = "D6A78BS4"
-let lyrics = "[Verse 1: Moliy]\n" +
-    "Might wanna rock you like Calypso\n" +
-    "If you do me sweet like Haribo"
+// Here indices represents the search results
+var lyrics = ' '
+var indices : any
+
+const options = {
+       title:  ' ',
+       artist: ' ',
+       apiKey: '3pTLkXn4VZpZXk3qJ61nkioYxvEaqzadxVGK1FNEN8-katQfRqngvvt1XzA06CaT', // Genius developer access token
+       optimizeQuery: true // Setting this to true will optimize the query for best results
+}
+
+async function searchSongs() {
+    indices = await geniusLyricsAPI.searchSong(options)
+    console.log(indices)
+}
+
+const searchResults = async () => {
+    await searchSongs()
+}
+
+async function getLyrics() {
+    lyrics = await geniusLyricsAPI.getLyrics(indices[0].url)
+}
+
+const lyricsResults = async () => {
+    await getLyrics()
+}
+
+let albumArt = indices[0].albumArt
+let title = indices[0].title
+let id = indices[0].id
+
+// ************************************************** //
+
 const App = () => {
 
   const [song, setSong] = useState<boolean>(false)
 
   const handleSearch = async () => {
-    setSong(true);
-
+    setSong(true)
   }
 
   return (
@@ -26,6 +54,7 @@ const App = () => {
             <Searcher onLoad={handleSearch} />}
       </div>
   );
+
 };
 
 export default App;

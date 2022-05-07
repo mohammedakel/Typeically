@@ -10,14 +10,13 @@ interface PageProps {
     lyrics: string
     albumArt: string
 }
+
 let idxs = [] as number[];
 var Filter = require('bad-words'),
     userFilter = new Filter(), userSubstrings = [''], wasProfane = false;
 userFilter.removeWords('xxx', 'hell', 'yed');
 
-
 const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
-
     document.addEventListener('keydown', function(event){
         if(event.key === "Escape"){
             setRowToInsert(new Map())
@@ -26,7 +25,6 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
         }
     });
 
-    
     const [selectedTable, setSelectedTable] = useState<string>("")
     const [rowToInsert, setRowToInsert] = useState<Map<string, string>>(new Map())
       
