@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import useTyping from "react-typing-game-hook";
 
-
 interface IState {
     count: number;
 }

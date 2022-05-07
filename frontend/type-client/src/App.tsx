@@ -10,7 +10,7 @@ var lyrics = ' '
 var indices : any
 
 const options = {
-       title:  ' ',
+       title:  document.getElementById("search"),
        artist: ' ',
        apiKey: '3pTLkXn4VZpZXk3qJ61nkioYxvEaqzadxVGK1FNEN8-katQfRqngvvt1XzA06CaT', // Genius developer access token
        optimizeQuery: true // Setting this to true will optimize the query for best results
@@ -33,20 +33,20 @@ const lyricsResults = async () => {
     await getLyrics()
 }
 
-let albumArt = indices[0].albumArt
-let title = indices[0].title
-let id = indices[0].id
+  searchResults()
+  lyricsResults()
 
-// ************************************************** //
+  let albumArt = indices[0].albumArt
+  let title = indices[0].title
+  let id = indices[0].id
+
+// ******************************************************************************** //
 
 const App = () => {
-
   const [song, setSong] = useState<boolean>(false)
-
   const handleSearch = async () => {
     setSong(true)
   }
-
   return (
       <div className="App">
         {song ?
@@ -54,7 +54,6 @@ const App = () => {
             <Searcher onLoad={handleSearch} />}
       </div>
   );
-
 };
 
 export default App;
