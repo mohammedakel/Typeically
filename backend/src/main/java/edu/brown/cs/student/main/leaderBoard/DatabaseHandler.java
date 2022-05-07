@@ -1,9 +1,8 @@
-package edu.brown.cs.student.main.DatabaseIntegration;
+package edu.brown.cs.student.main.leaderBoard;
 
 // imports
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
-import edu.brown.cs.student.main.TableLoadViz.DatabaseLoader;
 import spark.Request;
 import spark.Response;
 import spark.Route;

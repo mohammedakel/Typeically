@@ -4,16 +4,22 @@ package edu.brown.cs.student.main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 
-import edu.brown.cs.student.main.DatabaseIntegration.DatabaseHandler;
-import edu.brown.cs.student.main.DatabaseIntegration.DeleteHandler;
-import edu.brown.cs.student.main.DatabaseIntegration.InsertHandler;
-import edu.brown.cs.student.main.DatabaseIntegration.StoredDatabase;
-import edu.brown.cs.student.main.DatabaseIntegration.VerifyAPI;
-import edu.brown.cs.student.main.DatabaseIntegration.TableHandler;
-import edu.brown.cs.student.main.DatabaseIntegration.UpdateHandler;
+import edu.brown.cs.student.main.leaderBoard.DatabaseHandler;
+import edu.brown.cs.student.main.leaderBoard.DeleteHandler;
+import edu.brown.cs.student.main.leaderBoard.InsertHandler;
+import edu.brown.cs.student.main.leaderBoard.StoredDatabase;
+import edu.brown.cs.student.main.leaderBoard.VerifyAPI;
+import edu.brown.cs.student.main.leaderBoard.TableHandler;
+import edu.brown.cs.student.main.leaderBoard.UpdateHandler;
 import edu.brown.cs.student.main.REPL.GenericREPL;
-import edu.brown.cs.student.main.TableLoadViz.DatabaseLoader;
+import edu.brown.cs.student.main.leaderBoard.DatabaseLoader;
+import edu.brown.cs.student.main.spotify.LoadTracks;
+import edu.brown.cs.student.main.spotify.SpotifyClient;
+import edu.brown.cs.student.main.spotify.SpotifyTrack;
+import edu.brown.cs.student.main.spotify.TrackInfo;
+
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.ExceptionHandler;
@@ -54,6 +60,9 @@ public final class Main {
     // instantiate api demo class
     VerifyAPI verifyAPI = new VerifyAPI();
 
+    // instantiate load tracks class
+    LoadTracks loadTracks = new LoadTracks();
+
     // set up parsing of command line flags
     OptionParser parser = new OptionParser();
 
@@ -76,11 +85,11 @@ public final class Main {
 
     // ------------------ REPL INSTANTIATION -------------------
     GenericREPL repl = new GenericREPL();
-
     try {
       // database integration
       repl.addCommand("load_database", databaseLoader);
       repl.addCommand("verify_api", verifyAPI);
+      repl.addCommand("load_tracks", loadTracks);
     } catch (IllegalArgumentException e) {
       System.out.println("ERROR: duplicate command was added.");
     }
@@ -91,6 +100,8 @@ public final class Main {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+
   }
 
   /**

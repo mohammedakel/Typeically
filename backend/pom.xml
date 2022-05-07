@@ -17,15 +17,40 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <!-- repo for spotify APi wrapper -->
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
   <!-- Dependencies section for libraries put all of your libraries in here -->
   <dependencies>
+    <!-- Java spotify API wrapper -->
+    <dependency>
+      <groupId>se.michaelthelin.spotify</groupId>
+      <artifactId>spotify-web-api-java</artifactId>
+      <version>7.1.0</version>
+    </dependency>
     <!-- Selenium -->
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <version>4.0.0</version>
     </dependency>
+
+    <!-- for the Spotify API -->
+    <dependency>
+      <groupId>se.michaelthelin.spotify</groupId>
+      <artifactId>spotify-web-api-java</artifactId>
+      <version>7.0.1</version>
+    </dependency>
+
     <!-- WebDriver Manager -->
+
+
+
+
     <dependency>
       <groupId>io.github.bonigarcia</groupId>
       <artifactId>webdrivermanager</artifactId>
