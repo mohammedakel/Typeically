@@ -12,8 +12,7 @@ public class SpotifyAuth {
      * @return a String of the public developer spotify ID.
      */
     public static String getPublicId() {
-        String filePath = "/Users/mohammedakel/Desktop/CS032-Spring2022/term-project" +
-                "-gletourn-janagony-jboustan-makel-mstephe7/config/secret/spotifyPublicID.txt";
+        String filePath = "/Users/johnnyboustany/Desktop/cs32/finalproject/config/secret/spotifyPublicID.txt";
         FileParser parser = new FileParser(filePath);
         return parser.readNewLine();
     }
@@ -24,7 +23,7 @@ public class SpotifyAuth {
      * @return a String of the public developer spotify ID.
      */
     public static String getPrivateId() {
-        String filePath = "/Users/mohammedakel/Desktop/CS032-Spring2022/term-project-gletourn-janagony-jboustan-makel-mstephe7/config/secret/spotifyPrivateID.txt";
+        String filePath = "/Users/johnnyboustany/Desktop/cs32/finalproject/config/secret/spotifyPrivateID.txt";
         FileParser parser = new FileParser(filePath);
         return parser.readNewLine();
     }
@@ -35,7 +34,7 @@ public class SpotifyAuth {
      * @return a String of the Redirect UR.
      */
     public static String getRedirectURI() {
-        String filePath = "/Users/mohammedakel/Desktop/CS032-Spring2022/term-project-gletourn-janagony-jboustan-makel-mstephe7/config/secret/RedirectURI.txt";
+        String filePath = "/Users/johnnyboustany/Desktop/cs32/finalproject/config/secret/RedirectURI.txt";
         FileParser parser = new FileParser(filePath);
         return parser.readNewLine();
     }
