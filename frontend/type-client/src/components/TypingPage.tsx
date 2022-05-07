@@ -111,6 +111,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
 
             let newAddInfo = new Map(rowToInsert);
 
+            username.replace(" ","_")
             if (username !== ""){
                 newAddInfo.set("Username", username)
             }
@@ -127,7 +128,6 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             if (typeof duration === "string") {
                 newAddInfo.set("Duration (s)", duration.replace("s",""))
             }
-
 
             setRowToInsert(newAddInfo)
             setSelectedTable(tableId)
