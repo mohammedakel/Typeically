@@ -1,5 +1,3 @@
-
-
 import React, {useState} from "react";
 import TypingPage from "./components/TypingPage";
 import "./styles.css";
@@ -13,6 +11,7 @@ let lyrics = "[Verse 1: Moliy]\n" +
     "Might wanna rock you like Calypso\n" +
     "If you do me sweet like Haribo"
 const App = () => {
+
   const [song, setSong] = useState<boolean>(false)
 
   const handleSearch = async () => {
