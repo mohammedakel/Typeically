@@ -19,6 +19,13 @@
 
   <!-- Dependencies section for libraries put all of your libraries in here -->
   <dependencies>
+    <!-- Java spotify API wrapper -->
+    <dependency>
+      <groupId>se.michaelthelin.spotify</groupId>
+      <artifactId>spotify-web-api-java</artifactId>
+      <version>7.1.0</version>
+    </dependency>
+
     <!-- Selenium -->
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>

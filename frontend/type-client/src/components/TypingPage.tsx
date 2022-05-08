@@ -98,7 +98,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
     function submitUser() {
         let lbInput = document.getElementById("lbInput") as HTMLInputElement;
         let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
-        lbButton.style.display = "none"
+
         let invalidLabel = document.getElementById("invalidUserLabel") as HTMLElement;
         if (contiguousValid()) {
             let tableId = id; //'id' is the song id associated with the song, obtained from the Genius API
@@ -109,9 +109,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
 
             let newAddInfo = new Map(rowToInsert);
 
-            if (username !== ""){
-                newAddInfo.set("Username", username)
-            }
+            newAddInfo.set("Username", username.replace(" ","_"))
 
             newAddInfo.set("Date", moment().format("MM-DD-YYYY"))
 
@@ -126,10 +124,11 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
                 newAddInfo.set("Duration (s)", duration.replace("s",""))
             }
 
-
-            setRowToInsert(newAddInfo)
-            setSelectedTable(tableId)
-            console.log("username: " + username + ", wpm: " + wpm + ", accuracy: " + accuracy + ", duration: " + duration);
+            if (username !== ""){
+                setRowToInsert(newAddInfo)
+                setSelectedTable(tableId)
+                console.log("username: " + username + ", wpm: " + wpm + ", accuracy: " + accuracy + ", duration: " + duration);
+            }
 
             //ADD RESULTS TO LEADERBOARD HERE!!
 
@@ -141,8 +140,13 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             invalidLabel.hidden = true;
 
             //hide username input and submit button so that users cannot click submit again after successful submission:
-            lbInput.hidden = true;
-            lbButton.hidden = true;
+
+            if (username !== ""){
+                lbInput.hidden = true;
+                lbButton.hidden = true;
+                lbButton.style.display = "none"
+            }
+
         } else {
             lbInput.className = lbInput.className.replace(" invalid", "");
             lbInput.className = lbInput.className.replace(" valid", "");
