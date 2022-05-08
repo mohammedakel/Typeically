@@ -7,7 +7,8 @@ var geniusLyricsAPI = require("genius-lyrics-api")
 
 // Here indices represents the search results
 var lyrics = ' '
-var indices  : any
+// @ts-ignore
+var indices = []
 
 const options = {
        //title:  document.getElementById("search"),
@@ -18,43 +19,37 @@ const options = {
 }
 
 async function searchSongs() {
-    await geniusLyricsAPI.searchSong(options)
+    // @ts-ignoree
+    indices = await geniusLyricsAPI.searchSong(options)
     console.log(indices)
 }
 
-await searchSongs()
-
 async function getLyrics() {
-    await geniusLyricsAPI.getLyrics(indices[0].url)
+    // @ts-ignore
+    lyrics = await geniusLyricsAPI.getLyrics(indices[0].url)
 }
 
-await getLyrics()
-
-// const searchResults = async () => {
-//     await searchSongs()
-// }
-//
-// const lyricsResults = async () => {
-//     await getLyrics()
-// }
-//
-//   searchResults()
-//   lyricsResults()
-
-  let albumArt = indices[0].albumArt
-  let title = indices[0].title
-  let id = indices[0].id
-
-//     let albumArt = ' '
-//     let title = ' '
-//     let id = ' '
-
+    let albumArt = ' '
+    let title = ' '
+    let id = ' '
 
 // ******************************************************************************** //
 
 const App = () => {
   const [song, setSong] = useState<boolean>(false)
   const handleSearch = async () => {
+    await searchSongs()
+    await getLyrics()
+
+      // @ts-ignore
+      albumArt = indices[0].albumArt
+      // @ts-ignore
+      title = indices[0].title
+      // @ts-ignore
+      id = indices[0].id
+
+    // @ts-ignore
+    console.log(indices[0])
     setSong(true)
   }
   return (
