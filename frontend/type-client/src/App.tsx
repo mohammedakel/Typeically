@@ -32,7 +32,6 @@ async function getLyrics() {
     lyrics = await geniusLyricsAPI.getLyrics(indices[0].url)
 }
 
-
     let albumArt = ' '
     let title = ' '
     let id = ' '
