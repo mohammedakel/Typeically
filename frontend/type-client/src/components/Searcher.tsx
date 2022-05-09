@@ -23,16 +23,16 @@ const Searcher = ({onLoad: handleSearch}) => {
                 <button className="button" onClick={handleSearch}>Enter</button>
             </div>
             <div id ="popup">
-                <button className="res" id ="0" onClick={handleSearch}>Enter</button>
-                <button className="res" id ="1" onClick={handleSearch}>Enter</button>
-                <button className="res" id ="2" onClick={handleSearch}>Enter</button>
-                <button className="res" id ="3" onClick={handleSearch}>Enter</button>
-                <button className="res" id ="4" onClick={handleSearch}>Enter</button>
-                <button className="res" id ="5" onClick={handleSearch}>Enter</button>
-                <button className="res" id ="6" onClick={handleSearch}>Enter</button>
-                <button className="res" id ="7" onClick={handleSearch}>Enter</button>
-                <button className="res" id ="8" onClick={handleSearch}>Enter</button>
-                <button className="res" id ="9" onClick={handleSearch}>Enter</button>
+                <button className="res" id ="0">Enter</button>
+                <button className="res" id ="1">Enter</button>
+                <button className="res" id ="2">Enter</button>
+                <button className="res" id ="3">Enter</button>
+                <button className="res" id ="4">Enter</button>
+                <button className="res" id ="5">Enter</button>
+                <button className="res" id ="6">Enter</button>
+                <button className="res" id ="7">Enter</button>
+                <button className="res" id ="8">Enter</button>
+                <button className="res" id ="9">Enter</button>
             </div>
             <div id="page">
                 <h1 className="t2"></h1>
