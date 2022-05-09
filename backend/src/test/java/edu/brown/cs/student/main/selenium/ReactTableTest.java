@@ -41,11 +41,19 @@
 //   * Setup chrome driver.
 //   */
 //
+//// lfhmikememgdcahcdlaciloancbhjino
+//// /Users/johnnyboustany/Library/Application Support/Google/Chrome/Profile 1
+////
 //  @Before
 //  public void setupClass() throws InterruptedException {
 //    WebDriverManager.chromedriver().setup();
 //    driver = new ChromeDriver();
 //    driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+//
+//    chrome_options = Options()
+//    chrome_options.add_extension(r'C:\path\to\extension.crx')
+//    driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=r'C:\Utility\BrowserDrivers\chromedriver.exe')
+//
 //
 //    // loading the database from the backend
 //    DatabaseLoader databaseLoader = new DatabaseLoader();
@@ -104,7 +112,7 @@
 //    assertEquals(13, numRows);
 //    assertEquals(2, numCols);
 //  }
-
+//
 //  @Test
 //  public void modificationsToTable() {
 //    driver.get("http://www.localhost:3000/");
@@ -443,7 +451,7 @@
 //      assert(cells.size() == columnSize);
 //    }
 //  }
-
+//
 //  @Test
 //  public void noContentChangeForSameSelection(){
 //    driver.get("http://www.localhost:3000/");

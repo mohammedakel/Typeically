@@ -4,6 +4,8 @@ package edu.brown.cs.student.main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.List;
 
 import edu.brown.cs.student.main.leaderBoard.DatabaseHandler;
 import edu.brown.cs.student.main.leaderBoard.DatabaseLoader;
@@ -13,6 +15,8 @@ import edu.brown.cs.student.main.leaderBoard.VerifyAPI;
 import edu.brown.cs.student.main.leaderBoard.TableHandler;
 import edu.brown.cs.student.main.REPL.GenericREPL;
 import edu.brown.cs.student.main.spotify.LoadTracks;
+import edu.brown.cs.student.main.spotify.SpotifyHandler;
+import edu.brown.cs.student.main.spotify.TopTracks;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.ExceptionHandler;
@@ -88,6 +92,12 @@ public final class Main {
       System.out.println("ERROR: duplicate command was added.");
     }
 
+    TopTracks getTopTracks = new TopTracks();
+    List<HashMap<String, String>> result = getTopTracks.getListOfNewReleases();
+    for(HashMap<String, String> i: result) {
+      System.out.println(i.get("name"));
+    }
+
     // run the REPL until EOF, or until we have an IOException
     try {
       repl.runREPL();
@@ -132,7 +142,9 @@ public final class Main {
     Spark.exception(Exception.class, new ExceptionPrinter());
     Spark.get("/database", new DatabaseHandler(databaseLoader));
     Spark.get("/table", new TableHandler(databaseLoader));
+    Spark.get("/spotify", new SpotifyHandler());
     Spark.post("/insert", new InsertHandler(databaseLoader));
+
     Spark.init();
   }
 

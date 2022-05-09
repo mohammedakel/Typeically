@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import TypingPage from "./components/TypingPage";
 import "./styles.css";
 import Searcher from "./components/Searcher";
+import axios from 'axios';
 
 var geniusLyricsAPI = require("genius-lyrics-api")
 
@@ -23,6 +24,25 @@ async function searchSongs() {
     indices = await geniusLyricsAPI.searchSong(options)
     console.log(indices)
 }
+const HOST_URL: string = "http://localhost:4567"
+
+
+async function getTopSongs() {
+    axios.get(HOST_URL + "/spotify")
+        .then((response: any) => {
+            if(response.data['topTracks'] != null){
+                // setTopTracks(response.data['tableNames'])
+            }
+
+        })
+        .catch((e: any) => {
+            console.log(e)
+        });
+}
+
+
+
+
 
 async function getLyrics() {
 //     // @ts-ignore
