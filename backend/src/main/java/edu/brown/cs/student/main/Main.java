@@ -133,6 +133,7 @@ public final class Main {
     Spark.get("/database", new DatabaseHandler(databaseLoader));
     Spark.get("/table", new TableHandler(databaseLoader));
     Spark.post("/insert", new InsertHandler(databaseLoader));
+
     Spark.init();
   }
 
