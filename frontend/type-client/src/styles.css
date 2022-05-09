@@ -272,21 +272,31 @@
 }
 
 #popup {
-    position: absolute;
     alignment: center;
     top:30%;
-    left: 37.5%;
 
-    background: navajowhite;
+
+    background: #27334d;
     display: flex;
     flex-direction: column;
-    min-width: 300px;
+    width: auto;
+    margin:auto;
     border-radius: 50px;
+    border: 2px solid white;
 }
 
 .res {
     display: none;
 }
+
+.res:hover {
+    background: #1e273b;
+}
+
+#1:hover {
+    font-size: x-large;
+}
+
 
 @keyframes searchmate {
     from {width: 0px}
