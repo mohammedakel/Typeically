@@ -35,7 +35,7 @@ async function getLyrics() {
 
     let albumArt = ' '
     let title = ' '
-    let id = ' '
+    let id = 'A'
 
 // ******************************************************************************** //
 
@@ -56,7 +56,7 @@ const App = () => {
     // @ts-ignore
     title = indices[0].title
     // @ts-ignore
-    id = indices[0].id
+    id += indices[0].id
 
     // @ts-ignore
     console.log(indices[0])

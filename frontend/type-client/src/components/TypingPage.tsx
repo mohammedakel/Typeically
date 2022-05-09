@@ -32,6 +32,9 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
     var n = title.lastIndexOf(" by ");
     title = title.slice(0, n) + title.slice(n).replace("by", "-");
 
+    if (lyrics === null){
+        lyrics = "N"
+    }
     lyrics = lyrics.replace(/ *\[[^\]]*]/g, ''); //remove all strings in [square brackets] (ie, [intro], [verse 1], etc.)
     while(lyrics.charAt(0) === '\n') { //remove all leading \n line breaks at start of lyrics
         lyrics = lyrics.substring(1);
