@@ -271,6 +271,23 @@
     animation: fadeIn .7s forwards;
 }
 
+#popup {
+    position: absolute;
+    alignment: center;
+    top:30%;
+    left: 37.5%;
+
+    background: navajowhite;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    border-radius: 50px;
+}
+
+.res {
+    display: none;
+}
+
 @keyframes searchmate {
     from {width: 0px}
     to {width: 375px}

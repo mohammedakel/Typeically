@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Table from "./Table";
+// @ts-ignore
 import moment from 'moment';
 import TypingThroughInput from "./TypingThroughInput";
 
