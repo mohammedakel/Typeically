@@ -4,6 +4,9 @@ package edu.brown.cs.student.main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import edu.brown.cs.student.main.leaderBoard.DatabaseHandler;
 import edu.brown.cs.student.main.leaderBoard.DatabaseLoader;
@@ -12,6 +15,7 @@ import edu.brown.cs.student.main.leaderBoard.StoredDatabase;
 import edu.brown.cs.student.main.leaderBoard.VerifyAPI;
 import edu.brown.cs.student.main.leaderBoard.TableHandler;
 import edu.brown.cs.student.main.REPL.GenericREPL;
+import edu.brown.cs.student.main.spotify.TopTracks;
 import edu.brown.cs.student.main.spotify.LoadTracks;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -86,6 +90,12 @@ public final class Main {
       repl.addCommand("load_tracks", loadTracks);
     } catch (IllegalArgumentException e) {
       System.out.println("ERROR: duplicate command was added.");
+    }
+
+    TopTracks getTopTracks = new TopTracks();
+    List<HashMap<String, String>> result = getTopTracks.getListOfNewReleases();
+    for(HashMap<String, String> i: result) {
+      System.out.println(i.get("name"));
     }
 
     // run the REPL until EOF, or until we have an IOException

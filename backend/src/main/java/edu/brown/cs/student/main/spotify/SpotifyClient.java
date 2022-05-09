@@ -40,7 +40,7 @@ public class SpotifyClient {
      * A method responsible for initializing the spotify client access token
      *
      */
-    public static void clientCredentials() {
+    public  void clientCredentials() {
         try {
             final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
 

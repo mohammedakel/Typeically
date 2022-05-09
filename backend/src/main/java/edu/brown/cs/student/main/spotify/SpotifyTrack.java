@@ -5,6 +5,7 @@ import se.michaelthelin.spotify.model_objects.specification.ArtistSimplified;
 import se.michaelthelin.spotify.model_objects.specification.AudioFeatures;
 import se.michaelthelin.spotify.model_objects.specification.Paging;
 import se.michaelthelin.spotify.model_objects.specification.Track;
+import se.michaelthelin.spotify.requests.data.browse.GetListOfNewReleasesRequest;
 import se.michaelthelin.spotify.requests.data.search.simplified.SearchTracksRequest;
 import org.apache.hc.core5.http.ParseException;
 import se.michaelthelin.spotify.requests.data.tracks.GetAudioFeaturesForTrackRequest;
@@ -20,7 +21,7 @@ import java.util.List;
 */
 public class SpotifyTrack {
     private SpotifyClient client = new SpotifyClient();
-    private SearchTracksRequest searchTracksRequest;
+    private GetListOfNewReleasesRequest getListOfNewReleasesRequest;
 
     //global variable used to determine the maximum number of entries to be returned from the search
     private final int limit = 10;
@@ -34,12 +35,12 @@ public class SpotifyTrack {
      */
     public SpotifyTrack(String query){
         client.clientCredentials();
-        this.searchTracksRequest = client.spotifyApi.searchTracks(query)
+        this.getListOfNewReleasesRequest = client.spotifyApi.getListOfNewReleases()
                 //.market(CountryCode.SE)
                 .limit(limit)
                 //.offset(0)
                 //.includeExternal("audio")
-                .build();;
+                .build();
     }
 
     /*
@@ -51,30 +52,18 @@ public class SpotifyTrack {
      */
     public List<TrackInfo> getTracks() {
         List<TrackInfo> resultFinal = new ArrayList<TrackInfo>();
+        /**
         try {
             final Paging<Track> trackPaging = searchTracksRequest.execute();
             Track[] result = trackPaging.getItems();
             for (Track track: result) {
-                TrackInfo temp = new TrackInfo();
                 String trackID = track.getId();
-                temp.setID(trackID);
                 String trackURI = track.getUri();
-                temp.setURI(trackURI);
-                int trackDurationMs = track.getDurationMs();
-                temp.setDuration(trackDurationMs);
-                int trackNumber = track.getTrackNumber();
-                String trackAlbum = track.getAlbum().getName();
-                temp.setAlbum(trackAlbum);
                 ArtistSimplified[] trackArtist = track.getArtists();
                 List<String> artists = new ArrayList<>();
                 for(ArtistSimplified art: trackArtist) {
                     artists.add(art.getName());
                 }
-                temp.setArtists(artists);
-                int popularity = track.getPopularity();
-                temp.setPopularity(popularity);
-                boolean explicit = track.getIsExplicit();
-                temp.setExplicit(explicit);
                 GetAudioFeaturesForTrackRequest getAudioFeaturesForTrackRequest = client.spotifyApi
                         .getAudioFeaturesForTrack(trackID)
                         .build();
@@ -110,6 +99,7 @@ public class SpotifyTrack {
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
+         */
         return resultFinal;
     }
 
