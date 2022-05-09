@@ -58,12 +58,20 @@ const App = () => {
     await getLyrics()
     setLoading(true)
 
+      let resBtn = document.getElementsByClassName('res');
+      for(let i = 0; i< resBtn.length; i++) {
+        let bttn = resBtn[i] as HTMLButtonElement
+        bttn.style.display = "block";
+        // @ts-ignore
+        bttn.innerText = indices[i].title
+      }
+
     // @ts-ignore
-    albumArt = indices[0].albumArt
+    //albumArt = indices[0].albumArt
     // @ts-ignore
-    title = indices[0].title
+    //title = indices[0].title
     // @ts-ignore
-    id = indices[0].id
+    //id = indices[0].id
 
     // @ts-ignore
     console.log(indices[0])
