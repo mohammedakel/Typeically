@@ -49,7 +49,6 @@ const App = () => {
   const [topArtists, setTopArtists] = useState<string[]>([])
 
   const getTopSongs = () => {
-
     axios.get(HOST_URL + "/spotify")
         .then((response: any) => {
           if(response.data['topTracks'] != null){
@@ -60,7 +59,6 @@ const App = () => {
         .catch((e: any) => {
           console.log(e)
         });
-    console.log(topArtists)
     return topSongs
   }
 
@@ -278,7 +276,7 @@ const App = () => {
             <div>
               <select id={"dropdown"} onChange = {(event) => handleChooseTopSong(event.target.value)}>
                 <option selected> -- select a top song -- </option>
-                {topSongs.map((title) => <option value={title} key={title}>{title}</option>)}
+                {topSongs.map((title) => <option value={title} key={title}>{title + " by " + topArtists[topSongs.indexOf(title)]}</option>)}
               </select>
               <Searcher onLoad={handleSearch} onClick={onClick} />
             </div>}
