@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import TypingPage from "./components/TypingPage";
 import "./styles.css";
 import Searcher from "./components/Searcher";
+import axios from 'axios';
 import * as ReactBootStrap from 'react-bootstrap';
 // import Spinner from "./components/Spinner";
 
@@ -43,6 +44,26 @@ let id = 'A'
 // ******************************************************************************** //
 
 const App = () => {
+  const HOST_URL: string = "http://localhost:4567"
+  const [topSongs, setTopSongs] = useState<string[]>([])
+  const [topArtists, setTopArtists] = useState<string[]>([])
+
+  const getTopSongs = () => {
+
+    axios.get(HOST_URL + "/spotify")
+        .then((response: any) => {
+          if(response.data['topTracks'] != null){
+            setTopSongs(response.data['topTracks'])
+            setTopArtists(response.data['artists'])
+          }
+        })
+        .catch((e: any) => {
+          console.log(e)
+        });
+    console.log(topArtists)
+    return topSongs
+  }
+
   const [song, setSong] = useState<boolean>(false)
   const [loading, setLoading] = useState(false) // NOTE: for the loader } don't even need this — song does the same thing
 
@@ -101,6 +122,32 @@ const App = () => {
 
     // setLoading(false) // NOTE: for the loader
   }
+
+  const handleChooseTopSong = async (value: string) => {
+    // Source: https://bobbyhadz.com/blog/typescript-type-null-is-not-assignable-to-type-string
+    // options.title = document.getElementById("search").value !== null ? options.title: ' '
+    options.title = value;
+    options.artist = topArtists[topSongs.indexOf(value)]
+    console.log(options.title);
+
+    await searchSongs()
+    await getLyrics()
+
+    // @ts-ignore
+    albumArt = indices[0].albumArt
+    // @ts-ignore
+    title = indices[0].title
+    // @ts-ignore
+    id += indices[0].id
+
+    // @ts-ignore
+    console.log(indices[0])
+    setSong(true)
+  }
+
+  useEffect(() => {
+    getTopSongs();
+  }, []);
 
   async function onClick() {
     // @ts-ignore
@@ -228,11 +275,13 @@ const App = () => {
       <div className="App">
         {song ?
             <TypingPage id={id} title={title} lyrics={lyrics} albumArt={albumArt}/> :
-            //             (<>
-            //             <Searcher onLoad={handleSearch} />
-            //             <ReactBootStrap.Spinner animation="border" />
-            //             </>)}
-            <Searcher onLoad={handleSearch} onClick={onClick} />}
+            <div>
+              <select id={"dropdown"} onChange = {(event) => handleChooseTopSong(event.target.value)}>
+                <option selected> -- select a top song -- </option>
+                {topSongs.map((title) => <option value={title} key={title}>{title}</option>)}
+              </select>
+              <Searcher onLoad={handleSearch} onClick={onClick} />
+            </div>}
       </div>
   );
 
