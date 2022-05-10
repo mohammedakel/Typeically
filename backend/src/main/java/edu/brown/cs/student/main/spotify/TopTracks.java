@@ -44,7 +44,6 @@ public class TopTracks {
         resultFinal.add(resultTemp);
       }
       System.out.println("Total: " + albumSimplifiedPaging.getTotal());
-      System.out.println("here");
     } catch (IOException | SpotifyWebApiException | ParseException e) {
       System.out.println("Error: " + e.getMessage());
     }
