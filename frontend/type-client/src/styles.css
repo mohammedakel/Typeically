@@ -144,6 +144,19 @@
     outline:none;
 }
 
+th, td {
+    padding: 15px;
+    text-align: center;
+    border: 2px solid white;
+}
+tr:hover {background-color: #02067a;}
+
+
+th {
+    background-color: #2694bd;
+    color: white;
+}
+
 .invalid {
     border: 1.5px solid #e02626;
     transition: .2s steps(20, end);
