@@ -15,7 +15,7 @@ var geniusLyricsAPI = require("genius-lyrics-api")
 var lyrics = ' '
 // @ts-ignore
 var indices = []
-
+var indices1: string[] = []
 const options = {
   title:  ' ',
   artist: ' ',
@@ -59,6 +59,7 @@ const App = () => {
         .catch((e: any) => {
           console.log(e)
         });
+
     return topSongs
   }
 
@@ -124,9 +125,11 @@ const App = () => {
   const handleChooseTopSong = async (value: string) => {
     // Source: https://bobbyhadz.com/blog/typescript-type-null-is-not-assignable-to-type-string
     // options.title = document.getElementById("search").value !== null ? options.title: ' '
+
     options.title = value;
     options.artist = topArtists[topSongs.indexOf(value)]
-    console.log(options.title);
+    console.log(options.title)
+    console.log(options.artist)
 
     await searchSongs()
     await getLyrics()
@@ -274,11 +277,7 @@ const App = () => {
         {song ?
             <TypingPage id={id} title={title} lyrics={lyrics} albumArt={albumArt}/> :
             <div>
-              <select id={"dropdown"} onChange = {(event) => handleChooseTopSong(event.target.value)}>
-                <option selected> -- select a top song -- </option>
-                {topSongs.map((title) => <option value={title} key={title}>{title + " by " + topArtists[topSongs.indexOf(title)]}</option>)}
-              </select>
-              <Searcher onLoad={handleSearch} onClick={onClick} />
+              <Searcher onLoad={handleSearch} onClick={onClick} topSongs = {topSongs} topArtists={topArtists} handleChooseTopSong = {handleChooseTopSong} />
             </div>}
 
         <h3 id={"censor-label"}>Censor Lyrics</h3>
@@ -295,7 +294,7 @@ const App = () => {
                 <span id={"shortToggle"} className="slider round"></span>
             </span>
         </label>
-        <div id={"tell-esc"} hidden>Press escape to (un)censor the lyrics!</div>
+        <div id={"tell-esc"} hidden>Press escape to toggle the censoring of the lyrics!</div>
       </div>
   );
 

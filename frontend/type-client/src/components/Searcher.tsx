@@ -1,7 +1,7 @@
 import React from "react"
 
 // @ts-ignore
-const Searcher = ({onLoad: handleSearch, onClick}) => {
+const Searcher = ({onLoad: handleSearch, onClick, topSongs, topArtists, handleChooseTopSong: handleChooseTopSong}) => {
     //prevent pressing space from scrolling the page (for longer songs)
     document.documentElement.addEventListener('keydown', function (e) {
         // @ts-ignore
@@ -12,13 +12,22 @@ const Searcher = ({onLoad: handleSearch, onClick}) => {
         }
     }, false);
 
+
+
+
+
+
     return (
         <div id="load-page" >
             <h1 className="t1">Typeically</h1>
+
+            <h3  className="t2">Search for your own song:</h3>
+
             <div className={"barButton"}>
                 <input id="search" className="search" placeholder="Search..." autoComplete={"off"} ></input>
                 <button className="button" onClick={handleSearch}>Enter</button>
             </div>
+
             <div id ="popup">
                 <button className="res" id ="0"onClick={onClick}></button>
                 <button className="res" id ="1"></button>
@@ -31,6 +40,15 @@ const Searcher = ({onLoad: handleSearch, onClick}) => {
                 <button className="res" id ="8"></button>
                 <button className="res" id ="9"></button>
             </div>
+            <br/>
+
+            <h2  className="t2">Or choose a newly released song:</h2>
+
+            <div id ="popup1">
+                {topSongs.map((title: string) =>  <button className="top" onClick = {(event) => handleChooseTopSong(title)}>{(topSongs.indexOf(title) +1) + ". " + title + " by " + topArtists[topSongs.indexOf(title)]}</button>)}
+            </div>
+
+
             <div id="page">
                 <h1 className="t2"></h1>
             </div>
