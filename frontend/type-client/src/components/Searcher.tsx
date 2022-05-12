@@ -1,5 +1,15 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
+var geniusLyricsAPI = require("genius-lyrics-api")
 
+// @ts-ignore
+var indices: any[] = []
+
+const options = {
+    title:  ' ',
+    artist: ' ',
+    apiKey: '3pTLkXn4VZpZXk3qJ61nkioYxvEaqzadxVGK1FNEN8-katQfRqngvvt1XzA06CaT', // Genius developer access token
+    optimizeQuery: true // Setting this to true will optimize the query for best results
+}
 // @ts-ignore
 const Searcher = ({onLoad: handleSearch, onClick, topSongs, topArtists, handleChooseTopSong: handleChooseTopSong}) => {
     //prevent pressing space from scrolling the page (for longer songs)
@@ -12,10 +22,38 @@ const Searcher = ({onLoad: handleSearch, onClick, topSongs, topArtists, handleCh
         }
     }, false);
 
+    const [newTopSongs, setNewTopSongs] = useState<string[]>([])
 
+    async function searchSongs() {
+        // @ts-ignore
+        indices = await geniusLyricsAPI.searchSong(options)
+        console.log(indices)
+    }
 
+    const newSongs = async () => {
+        let newSongs = []
+        let newArtists = []
+        console.log(topSongs)
 
+        for (let i = 0; i < topSongs.length; i++) {
+            options.title = topSongs[i];
+            options.artist = topArtists[i]
+            await searchSongs()
+            let songTitle = indices[0].title
+            let songTitleArr = songTitle.split(" ")
+            let apiSongTitleArr = topSongs[i].split(" ")
+            if (songTitleArr[0] === apiSongTitleArr[0]) {
+                newSongs.push(topSongs[i])
+                newArtists.push(topArtists[i])
+            }
+        }
+        console.log(newSongs)
 
+        console.log("hi")
+        return newSongs
+    }
+
+    useEffect(() => {newSongs().then(r => setNewTopSongs(r))}, [topSongs]);
 
     return (
         <div id="load-page" >
@@ -45,9 +83,8 @@ const Searcher = ({onLoad: handleSearch, onClick, topSongs, topArtists, handleCh
             <h2  className="t2">Or choose a newly released song:</h2>
 
             <div id ="popup1">
-                {topSongs.map((title: string) =>  <button className="top" onClick = {(event) => handleChooseTopSong(title)}>{(topSongs.indexOf(title) +1) + ". " + title + " by " + topArtists[topSongs.indexOf(title)]}</button>)}
+                {newTopSongs.map((title: string) =>  <button className="top" onClick = {(event) => handleChooseTopSong(title)}>{(newTopSongs.indexOf(title) +1) + ". " + title + " by " + topArtists[topSongs.indexOf(title)]}</button>)}
             </div>
-
 
             <div id="page">
                 <h1 className="t2"></h1>

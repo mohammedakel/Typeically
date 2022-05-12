@@ -50,7 +50,7 @@
     background-color: #27334d;
     gap: 0px;
     color: #323232;
-    min-height: 100vh;
+    min-height: 10vh;
 }
 
 #load-page button {

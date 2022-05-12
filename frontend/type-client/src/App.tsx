@@ -15,7 +15,6 @@ var geniusLyricsAPI = require("genius-lyrics-api")
 var lyrics = ' '
 // @ts-ignore
 var indices = []
-var indices1: string[] = []
 const options = {
   title:  ' ',
   artist: ' ',
