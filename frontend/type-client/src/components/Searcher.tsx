@@ -34,20 +34,6 @@ const Searcher = ({onLoad: handleSearch, onClick}) => {
             <div id="page">
                 <h1 className="t2"></h1>
             </div>
-            <h3 id={"censor-label"}>Censor Lyrics</h3>
-            <h3 id={"shorten-label"}>Shorten Lyrics</h3>
-            <label className="switch">
-            <span>
-                <input id={"censor-toggle"} type={"checkbox"}></input>
-                <span className="slider round"></span>
-            </span>
-            </label>
-            <label className="switch2">
-            <span>
-                <input id={"shorten-toggle"} type={"checkbox"}></input>
-                <span className="slider round"></span>
-            </span>
-            </label>
         </div>
     )
 }

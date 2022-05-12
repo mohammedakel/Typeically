@@ -283,6 +283,24 @@ th {
     animation: fadeIn .7s forwards;
 }
 
+#tell-esc {
+    position: absolute;
+    left: 0%;
+    top: 15%;
+
+    height: 200%;
+    width: 100%;
+    font-size: 30px;
+    font-family: monospace;
+    padding: 200px;
+    border-radius: 7px;
+    border: 2px solid #999999;
+    background:rgba(35, 46, 69,0.8);
+    backdrop-filter: blur(2.5px);
+    box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.5);
+    animation: fadeIn .7s forwards;
+}
+
 #popup {
     alignment: center;
     top:30%;

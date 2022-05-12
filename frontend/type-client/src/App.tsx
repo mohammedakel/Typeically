@@ -280,6 +280,22 @@ const App = () => {
               </select>
               <Searcher onLoad={handleSearch} onClick={onClick} />
             </div>}
+
+        <h3 id={"censor-label"}>Censor Lyrics</h3>
+        <h3 id={"shorten-label"}>Shorten Lyrics</h3>
+        <label className="switch">
+            <span>
+                <input id={"censor-toggle"} type={"checkbox"}></input>
+                <span id={"censorToggle"} className="slider round"></span>
+            </span>
+        </label>
+        <label className="switch2">
+            <span>
+                <input id={"shorten-toggle"} type={"checkbox"}></input>
+                <span id={"shortToggle"} className="slider round"></span>
+            </span>
+        </label>
+        <div id={"tell-esc"} hidden>Press escape to (un)censor the lyrics!</div>
       </div>
   );
 

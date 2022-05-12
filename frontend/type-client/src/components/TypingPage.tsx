@@ -16,8 +16,24 @@ var Filter = require('bad-words'),
     userFilter = new Filter(), userSubstrings = [''], wasProfane = false, lyricFilter = new Filter();
 userFilter.removeWords('xxx', 'hell', 'yed');
 
-
 const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
+
+    let censorToggle = document.getElementById("censor-toggle") as HTMLInputElement;
+
+    censorToggle.onchange = function changeCensor() {
+        let togInstr = document.getElementById("tell-esc") as HTMLElement;
+        togInstr.hidden = false;
+    }
+
+    //let censorLabel = document.getElementById("censor-label") as HTMLElement;
+    let toggleShorten = document.getElementById("shortToggle") as HTMLInputElement;
+    let shortenLabel = document.getElementById("shorten-label") as HTMLElement;
+    censorToggle.hidden = true;
+    censorToggle.style.display = "none"
+    //censorLabel.hidden = true;
+    toggleShorten.hidden = true;
+    toggleShorten.style.display = "none";
+    shortenLabel.hidden = true;
 
     document.addEventListener('keydown', function(event){
         if(event.key === "Escape"){
@@ -80,7 +96,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
     lyrics = lyrics.replace(/—/g, '-') //replace weird longer hyphen with standard hyphen
     lyrics = lyrics.replace(/[^0-9a-z!\s@#$%^&*()_+={}|:;'"<>,.?/~`-]/gi, '?') //replace any unrecognized characters not on english keyboards with ?
 
-    let censorToggle = document.getElementById("censor-toggle") as HTMLInputElement;
+
     if (censorToggle.checked) {
         lyrics = lyricFilter.clean(lyrics);
         console.log("cleaned lyrics");

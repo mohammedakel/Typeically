@@ -39,6 +39,8 @@ const TypeThroughInput: FC<{ text: string, indices: number[]}> = ({ text, indice
             for (let i = 0; i < spans.length; i++)  {
                 spans[i].hidden = false;
             }
+            let togInstr = document.getElementById("tell-esc") as HTMLElement;
+            togInstr.hidden = true;
             setCounter(0); //resets counter to 0
         }
     });
@@ -224,19 +226,26 @@ const TypeThroughInput: FC<{ text: string, indices: number[]}> = ({ text, indice
     function doOnEnded() {
         let spans = document.getElementsByTagName('span');
         for (let i = 0; i < text.length; i++) {
-            spans[i].hidden = true;
+            if (spans[i]) {
+                spans[i].hidden = true;
+            }
         }
         let lbInput = document.getElementById("lbInput") as HTMLInputElement;
         let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
         let lbInstructions = document.getElementById("lbInstructions") as HTMLDivElement;
-        lbInput.hidden=false;
-        lbButton.hidden=false;
-        lbInstructions.hidden=false;
-
-        //set stats as attributes of lbInput so that we can get the info in TypingPage for the leaderboard:
-        lbInput.setAttribute("wpm", Math.round(((60 / duration) * correctChar) / 5).toString())
-        lbInput.setAttribute("acc", (((correctChar - (errorChar)/4) / text.length) * 100).toFixed(2) + "%")
-        lbInput.setAttribute("duration", duration.toString())
+        if (lbInput) {
+            lbInput.hidden = false;
+            //set stats as attributes of lbInput so that we can get the info in TypingPage for the leaderboard:
+            lbInput.setAttribute("wpm", Math.round(((60 / duration) * correctChar) / 5).toString())
+            lbInput.setAttribute("acc", (((correctChar - (errorChar)/4) / text.length) * 100).toFixed(2) + "%")
+            lbInput.setAttribute("duration", duration.toString())
+        }
+        if (lbButton) {
+            lbButton.hidden = false;
+        }
+        if (lbInstructions) {
+            lbInstructions.hidden = false;
+        }
         return(
             <>
             <span id={"wpmLabel"} className="text-green-500 mr-4">
