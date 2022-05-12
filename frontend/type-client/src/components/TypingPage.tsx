@@ -13,7 +13,7 @@ interface PageProps {
 }
 let idxs = [] as number[];
 var Filter = require('bad-words'),
-    userFilter = new Filter(), userSubstrings = [''], wasProfane = false;
+    userFilter = new Filter(), userSubstrings = [''], wasProfane = false, lyricFilter = new Filter();
 userFilter.removeWords('xxx', 'hell', 'yed');
 
 
@@ -54,6 +54,14 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
     lyrics = lyrics.replace(/е/g, 'e') //replace cyrillic e with regular e
     lyrics = lyrics.replace(/—/g, '-') //replace weird longer hyphen with standard hyphen
     lyrics = lyrics.replace(/[^0-9a-z!\s@#$%^&*()_+={}|:;'"<>,.?/~`-]/gi, '?') //replace any unrecognized characters not on english keyboards with ?
+
+    let censorToggle = document.getElementById("censor-toggle") as HTMLInputElement;
+    if (censorToggle.checked) {
+        lyrics = lyricFilter.clean(lyrics);
+        console.log("cleaned lyrics");
+    } else {
+        console.log("lyrics left dirty")
+    }
 
     // @ts-ignore
     return (

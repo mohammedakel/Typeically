@@ -3,7 +3,7 @@ import TypingPage from "./components/TypingPage";
 import "./styles.css";
 import Searcher from "./components/Searcher";
 import axios from 'axios';
-
+import * as ReactBootStrap from 'react-bootstrap';
 // import Spinner from "./components/Spinner";
 
 // Good source for spinner: https://hashnode.com/post/how-to-add-loader-or-spinner-using-react-hooks-while-fetching-data-from-apis-ckhv38mr902kdgms100vh3u86

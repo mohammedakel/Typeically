@@ -14,6 +14,7 @@ const Searcher = ({onLoad: handleSearch, onClick}) => {
 
     return (
         <div id="load-page" >
+            <h3 id={"censor-label"}>Censor Lyrics</h3>
             <h1 className="t1">Typeically</h1>
             <div className={"barButton"}>
                 <input id="search" className="search" placeholder="Search..." autoComplete={"off"} ></input>
@@ -34,6 +35,12 @@ const Searcher = ({onLoad: handleSearch, onClick}) => {
             <div id="page">
                 <h1 className="t2"></h1>
             </div>
+            <label className="switch">
+            <span>
+                <input id={"censor-toggle"} type={"checkbox"}></input>
+                <span className="slider round"></span>
+            </span>
+            </label>
         </div>
     )
 }
