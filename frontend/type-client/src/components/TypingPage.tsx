@@ -101,9 +101,9 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
     function submitUser() {
         let lbInput = document.getElementById("lbInput") as HTMLInputElement;
         let lbButton = document.getElementById("lbButton") as HTMLButtonElement;
-        lbButton.style.display = "none"
         let invalidLabel = document.getElementById("invalidUserLabel") as HTMLElement;
         if (contiguousValid()) {
+            lbButton.style.display = "none" //hide button only if the username is valid
             let tableId = id; //'id' is the song id associated with the song, obtained from the Genius API
             let wpm = lbInput.getAttribute("wpm");
             let accuracy = lbInput.getAttribute("acc");
