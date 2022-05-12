@@ -359,7 +359,7 @@ th {
 
 #censor-label {
     position: absolute;
-    top: 35px;
+    top: 0px;
     right: 5px;
     font-family: Helvetica, monospace;
 }
@@ -367,7 +367,23 @@ th {
 .switch {
     position: absolute;
     right: 20px;
-    top: 0;
+    top: 25px;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+#shorten-label {
+    position: absolute;
+    top: 70px;
+    right: 5px;
+    font-family: Helvetica, monospace;
+}
+
+.switch2 {
+    position: absolute;
+    right: 20px;
+    top: 95px;
     display: inline-block;
     width: 60px;
     height: 34px;
@@ -375,6 +391,13 @@ th {
 
 /* Hide default HTML checkbox */
 .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Hide default HTML checkbox */
+.switch2 input {
     opacity: 0;
     width: 0;
     height: 0;

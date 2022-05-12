@@ -27,13 +27,38 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
         }
     });
 
-    
+
     const [selectedTable, setSelectedTable] = useState<string>("")
     const [rowToInsert, setRowToInsert] = useState<Map<string, string>>(new Map())
-      
+
     //replace last ' by ' in title with hyphen ("-")
     var n = title.lastIndexOf(" by ");
     title = title.slice(0, n) + title.slice(n).replace("by", "-");
+
+    let shortenToggle = document.getElementById("shorten-toggle") as HTMLInputElement;
+    let newlines = lyrics.split("\n");
+    if (shortenToggle.checked && newlines.length > 30) {
+        lyrics = lyrics.replace("Verse", "V");
+        lyrics = lyrics.replace("[Chorus", "[C")
+        lyrics = lyrics.replace("Pre-Chorus", "PreC")
+        lyrics = lyrics.replace("Post-Chorus", "PostC")
+        console.log(lyrics)
+        lyrics = lyrics.replace(/(\[Verse)[\s\S]*?(\[)/g, "\["); //remove lyrics labeled under "[Verse _]"
+        lyrics = lyrics.replace(/(\[Chorus)[\s\S]*?(\[)/g, "\["); //remove lyrics labeled under "[Chorus]"
+        lyrics = lyrics.replace(/(\[Chorus)[\s\S]*?(\[)/g, "\["); //remove lyrics labeled under "[Chorus]"
+        lyrics = lyrics.replace(/(\[Chorus)[\s\S]*?(\[)/g, "\["); //remove lyrics labeled under "[Chorus]"
+        lyrics = lyrics.replace(/(\[Pre-Chorus)[\s\S]*?(\[)/g, "\["); //remove lyrics labeled under "[Pre-]"
+        lyrics = lyrics.replace(/(\[Post-Chorus)[\s\S]*?(\[)/g, "\["); //remove lyrics labeled under "[Post-]"
+        lyrics = lyrics.replace(/(\[Intro)[\s\S]*?(\[)/, "\["); //remove [Intro] lyrics"
+        lyrics = lyrics.split("\[Outro")[0]; //remove lyrics after the labeled "[Outro]"
+        lyrics = lyrics.split("\[Verse")[0]; //remove lyrics after the last label: "[Verse]"
+        lyrics = lyrics.split("\[Chorus")[0]; //remove lyrics after the last label: "[Verse]"
+        lyrics = lyrics.split("\[Post-Chorus")[0]; //remove lyrics after the last label: "[Verse]"
+        console.log(lyrics);
+        title += " (shortened)" //change title to shortened
+        id = "S" + id;  //add S to beginning of song id so that the shortened leader board so that leaderboard matches shortened song
+        console.log(id);
+    }
 
     lyrics = lyrics.replace(/ *\[[^\]]*]/g, ''); //remove all strings in [square brackets] (ie, [intro], [verse 1], etc.)
     while(lyrics.charAt(0) === '\n') { //remove all leading \n line breaks at start of lyrics
