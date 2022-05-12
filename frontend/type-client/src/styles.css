@@ -34,6 +34,8 @@
     font-family: serif;
     font-size: 20px;
     width: max-content;
+    justify-content: center
+
 }
 
 
@@ -304,8 +306,6 @@ th {
 #popup {
     alignment: center;
     top:30%;
-
-
     background: #27334d;
     display: flex;
     flex-direction: column;
@@ -314,6 +314,7 @@ th {
     border-radius: 50px;
     border: 2px solid white;
 }
+
 
 .res {
     display: none;
