@@ -1,36 +1,26 @@
 package edu.brown.cs.student.main.selenium;
 
-import edu.brown.cs.student.main.leaderBoard.StoredDatabase;
 import edu.brown.cs.student.main.Main;
-import edu.brown.cs.student.main.leaderBoard.DatabaseLoader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
 import spark.Spark;
 
 import java.io.File;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests that dynamic changes work as expected on the frontend.
@@ -65,6 +55,7 @@ public class ReactTableTest {
 
   /**
    * Make sure you activate the extension in the browser.
+   * Refer to README.
    */
   @Test
   public void searchForSong() throws InterruptedException {
@@ -102,6 +93,7 @@ public class ReactTableTest {
 
   /**
    * Make sure you activate the extension in the browser.
+   * Refer to README.
    */
   @Test
   public void chooseTopSong() throws InterruptedException {
