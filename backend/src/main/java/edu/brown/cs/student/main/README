@@ -1,22 +1,23 @@
 README Term Project Typeically
 
 Instructions:
+    In one terminal:
+        cd frontend
+        cd type-client
+        npm start
 
-    cd backend
-    ./run --gui
+    In another terminal:
+        cd backend
+        ./run --gui
 
-To run the Junit tests:
-    cd backend
-    mvn test
+    To run the Junit tests:
+        cd backend
+        mvn test
 
     **IMPORTANT**:
-    - make sure you activate the CORS UnBlock extension in the browser when the selenium tabs open)
-    - there should be a yellow dot on the bug.
+    - make sure you activate the CORS UnBlock extension in the browser when the selenium tabs open
+    - there should be a yellow dot on the bug
     - you need to do this for every tab that opens from selenium
     - no need to download the extension, it is preloaded
-
-
-
-
 
 
