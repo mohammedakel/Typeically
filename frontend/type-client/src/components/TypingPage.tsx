@@ -113,7 +113,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             <div className="container mx-auto flex flex-col p-4">
                 <h5 id={"escape-instruct"}>Esc to reset</h5>
                 <div className="border-2 p-4 rounded-lg">
-                    <h1 onMouseOver={showImage} onMouseLeave={hideImage} className="mb-2">{title}</h1>
+                    <h1 onMouseOver={showImage} onMouseLeave={hideImage} className="mb-2" id="titleOfSong">{title}</h1>
 
                     <div id={"lyrics"} >
                         <TypingThroughInput

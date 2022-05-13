@@ -63,7 +63,7 @@ const Searcher = ({onLoad: handleSearch, onClick, topSongs, topArtists, handleCh
 
             <div className={"barButton"}>
                 <input id="search" className="search" placeholder="Search..." autoComplete={"off"} ></input>
-                <button className="button" onClick={handleSearch}>Enter</button>
+                <button id="searchButton" className="button" onClick={handleSearch}>Enter</button>
             </div>
 
             <div id ="popup">
@@ -83,7 +83,7 @@ const Searcher = ({onLoad: handleSearch, onClick, topSongs, topArtists, handleCh
             <h2  className="t2">Or choose a newly released song:</h2>
 
             <div id ="popup1">
-                {newTopSongs.map((title: string) =>  <button className="top" onClick = {(event) => handleChooseTopSong(title)}>{(newTopSongs.indexOf(title) +1) + ". " + title + " by " + topArtists[topSongs.indexOf(title)]}</button>)}
+                {newTopSongs.map((title: string) =>  <button id="newSongs" className="top" onClick = {(event) => handleChooseTopSong(title)}>{(newTopSongs.indexOf(title) +1) + ". " + title + " by " + topArtists[topSongs.indexOf(title)]}</button>)}
             </div>
 
             <div id="page">
