@@ -113,7 +113,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             <div className="container mx-auto flex flex-col p-4">
                 <h5 id={"escape-instruct"}>Esc to reset</h5>
                 <div className="border-2 p-4 rounded-lg">
-                    <h1 onMouseOver={showImage} onMouseLeave={hideImage} className="mb-2" id="titleOfSong">{title}</h1>
+                    <h1 onMouseOver={showImage} onMouseLeave={hideImage} className="mb-2" id="titleOfSong" >{title}</h1>
 
                     <div id={"lyrics"} >
                         <TypingThroughInput
@@ -162,7 +162,9 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
             let newAddInfo = new Map(rowToInsert);
 
             if (username !== ""){
-                newAddInfo.set("Username", username)
+                newAddInfo.set("Username", username.replace(" ","-"))
+            } else {
+                newAddInfo.set("Username", "anonymous");
             }
 
             newAddInfo.set("Date", moment().format("MM-DD-YYYY"))
