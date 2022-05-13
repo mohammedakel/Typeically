@@ -293,7 +293,42 @@ const App = () => {
                 <span id={"shortToggle"} className="slider round"></span>
             </span>
         </label>
+
         <div id={"tell-esc"} hidden>Press escape to toggle the censoring of the lyrics!</div>
+        <div id={"about-popup"} hidden >
+          <h1 className={"about-header"}>Welcome to Typeically:</h1>
+          <p className={"about-para"}> &emsp;Typeically is a web-based typing app that allows you to find your favorite
+            songs and type along to the lyrics! Use the search bar to find a song by artist, song name, or lyric content,
+            and hit 'enter' to generate song options. You can also choose a song from the list of new releases.
+            Once you've found the result for the song you wish to type to, click on it and you'll be directed to the typing page.
+            <br></br>
+            <br></br>
+            &emsp;Toggle the song length and censorship of explicit lyrics using the switches at the top-right of the screen.
+            Click on the typing box, and type along to your favorite lyrics! Upon finishing the song, you will receive your typing stats
+            and will have the option to submit your score to that song's specific leaderboard! You've got to be quick--only the top 5
+            completion times are displayed on the leaderboard!
+            <br></br>
+            <br></br>
+            &emsp;You can view the album art for the song you selected by hovering over the song title!
+            <br></br>
+            Return back to the song search page by clicking the Typeically header at the top left of the page!
+          </p>
+
+          <br></br>
+          <h1 className={"about-header"}>About the Developers:</h1>
+          <p className={"about-para"}>&emsp;We are 5 Brown University CS students; this app represents our term project for
+          CS32, 'Intro to Software Engineering.' Whether you use it to relax, learn lyrics, or
+            to earn a place on your favorite song's leaderboard, we hope Typeically allows you to embrace a love for music and typing!
+            <br></br>
+            <br></br>
+
+            Enjoy!
+            <br></br>
+            Sincerely,
+            <br></br>
+            Gus, Justin, Johnny, Mohammed, and Matthew
+          </p>
+        </div>
       </div>
   );
 

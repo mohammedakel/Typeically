@@ -96,7 +96,9 @@
     width: fit-content;
     margin: auto;
     color: white;
-    background: #1647b8 ;
+    background:  #36476b;
+    padding: 5px;
+    border-radius: 7px;
     animation: fadeIn linear .6s;
     -webkit-animation: fadeIn linear .6s;
     -moz-animation: fadeIn linear .6s;
@@ -249,9 +251,8 @@ th {
     color: #e36f6f;
     overflow: hidden;
     border-right: .4em solid red;
-    width: 20%;
+    font-size: 1.2rem;
     white-space: nowrap;
-    font-size: .8rem;
     font-family: Helvetica, monospace;
     margin: auto;
     animation: typing 1s steps(200, end) forwards,
@@ -278,7 +279,7 @@ th {
 }
 
 #image {
-    animation: fadeIn .65s, searchmate .9s steps(75, end) forwards;
+    animation: fadeIn .65s forwards;
     box-shadow: 0 0 0 9999px #000000b0;
 }
 
@@ -316,6 +317,31 @@ th {
     animation: fadeIn .7s forwards;
 }
 
+#about-popup {
+    position: absolute;
+    left: 20%;
+    top: 14%;
+    padding: 30px;
+    animation: fadeIn .7s forwards;
+    border: 2px solid white;
+    max-width: 60%;
+    background:rgba(35, 46, 69,1);
+    box-shadow: 0 0 10px white;
+    border-radius: 10px;
+}
+
+.about-header {
+    color: white;
+    font-size: 30px;
+    font-family: Georgia;
+}
+
+.about-para {
+    color: #A9A9A9;
+    font-size: 18.3px;
+    font-family: Georgia;
+}
+
 #popup {
     alignment: center;
     top:30%;
@@ -326,7 +352,9 @@ th {
     margin:auto;
     border-radius: 50px;
     border: 2px solid white;
+    padding: 5px;
 }
+
 
 #popup1 {
     alignment: center;
@@ -342,15 +370,29 @@ th {
     -moz-animation: fadeIn linear .8s;
     -o-animation: fadeIn linear .8s;
     -ms-animation: fadeIn linear .8s;
+    padding: 5px;
+}
+
+#about-img {
+    position: fixed;
+    left: 0%;
+    bottom: .5%;
+    max-height: 45px;
 }
 .res {
     display: none;
+    padding: 0;
+    border-radius: 7px;
 }
 
 .res:hover {
     background: #1e273b;
 }
 
+.top {
+    padding: 0;
+    border-radius: 7px;
+}
 
 .top:hover {
     background: #1e273b;
