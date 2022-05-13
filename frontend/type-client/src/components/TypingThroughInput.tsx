@@ -216,9 +216,9 @@ const TypeThroughInput: FC<{ text: string, indices: number[]}> = ({ text, indice
             </div>
             <p className="text-sm">
                 {phase === 2 && startTime && endTime ? doOnEnded() : null}
-                <span className="mr-4"> Current Index: {currIndex}</span>
-                <span className="mr-4"> Correct Characters: {correctChar}</span>
-                <span className="mr-4"> Error Characters: {errorChar}</span>
+                <span className="mr-4" hidden> Current Index: {currIndex}</span>
+                <span className="mr-4" hidden> Correct Characters: {correctChar}</span>
+                <span className="mr-4" hidden> Error Characters: {errorChar}</span>
             </p>
         </div>
     );

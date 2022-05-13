@@ -137,7 +137,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
                 <span><button id="lbButton"className={"button2"} onClick={submitUser} hidden>submit</button></span>
             </div>
             <div className="labelContainer">
-                <div id={"invalidUserLabel"}className="typed-out2" hidden>profanity detected in username ;( please try something else</div>
+                <div id={"invalidUserLabel"}className="typed-out2" hidden>profanity detected in username. try another</div>
             </div>
 
             <Table selectedTable={selectedTable} rowToInsert = {rowToInsert} setRowToInsert={setRowToInsert}/>
@@ -210,7 +210,7 @@ const TypingPage = ({id, title, lyrics, albumArt}: PageProps) => {
     async function hideImage() {
         let img = document.getElementById("image") as HTMLDivElement;
         let spans = document.getElementsByTagName("span");
-        img.style.animation = 'fadeOut .65s, searchmate .9s steps(75, end) forwards';
+        img.style.animation = 'fadeOut .65s forwards';
         for (let i = 0; i < spans.length; i++) {
             spans[i].style.opacity = "1";
         }

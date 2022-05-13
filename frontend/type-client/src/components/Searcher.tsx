@@ -22,6 +22,17 @@ const Searcher = ({onLoad: handleSearch, onClick, topSongs, topArtists, handleCh
         }
     }, false);
 
+    let about = document.getElementById("about") as HTMLDivElement;
+    let aboutPopup = document.getElementById("about-popup") as HTMLDivElement;
+
+
+    function showAbout() {
+        aboutPopup.hidden = false;
+    }
+    function hideAbout() {
+        aboutPopup.hidden = true;
+    }
+
     const [newTopSongs, setNewTopSongs] = useState<string[]>([])
 
     async function searchSongs() {
@@ -83,11 +94,13 @@ const Searcher = ({onLoad: handleSearch, onClick, topSongs, topArtists, handleCh
             <h2  className="t2">Or choose a newly released song:</h2>
 
             <div id ="popup1">
-                {newTopSongs.map((title: string) =>  <button id="newSongs" className="top" onClick = {(event) => handleChooseTopSong(title)}>{(newTopSongs.indexOf(title) +1) + ". " + title + " by " + topArtists[topSongs.indexOf(title)]}</button>)}
+                {newTopSongs.map((title: string) =>  <button className="top" id="newSongs" onClick = {(event) => handleChooseTopSong(title)}>{(newTopSongs.indexOf(title) +1) + ". " + title + " by " + topArtists[topSongs.indexOf(title)]}</button>)}
+            </div>
+            <div id={"about"} onMouseOver={showAbout} onMouseLeave={hideAbout} >
+                <img id={"about-img"}src={require('./about-us-ICON.png')}></img>
             </div>
 
             <div id="page">
-                <h1 className="t2"></h1>
             </div>
         </div>
     )
